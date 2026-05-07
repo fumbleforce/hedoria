@@ -1,0 +1,8 @@
+{
+  "configVersion": "V33",
+  "heroesVersion": 33,
+  "embeddings": {},
+  "embeddingModel": "emb-openai-3-small-256",
+  "embeddingDimension": 256,
+  "mods": []
+}

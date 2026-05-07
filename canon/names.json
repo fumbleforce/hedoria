@@ -1,0 +1,249 @@
+{
+  "randomNames": {
+    "male": [
+      "Alaric",
+      "Alistair",
+      "Atlas",
+      "Aurelius",
+      "Bastian",
+      "Blade",
+      "Caelan",
+      "Caelum",
+      "Caspian",
+      "Cassius",
+      "Cyrus",
+      "Dante",
+      "Dorian",
+      "Drake",
+      "Draven",
+      "Eamon",
+      "Eldric",
+      "Ember",
+      "Evander",
+      "Ezra",
+      "Faelan",
+      "Felix",
+      "Finn",
+      "Galahad",
+      "Gareth",
+      "Gawain",
+      "Gideon",
+      "Griffin",
+      "Hadrian",
+      "Hawk",
+      "Jasper",
+      "Kai",
+      "Kestrel",
+      "Leander",
+      "Lucian",
+      "Lysander",
+      "Magnus",
+      "Merlin",
+      "Nero",
+      "Nolan",
+      "Orson",
+      "Perseus",
+      "Phoenix",
+      "Quinn",
+      "Ragnar",
+      "Raven",
+      "Rowan",
+      "Rune",
+      "Silas",
+      "Storm",
+      "Talon",
+      "Thaddeus",
+      "Thorn",
+      "Thorne",
+      "Torin",
+      "Vale",
+      "Varian",
+      "Wesley",
+      "Wolf",
+      "Xander",
+      "Zain",
+      "Zenith",
+      "Zephyr"
+    ],
+    "female": [
+      "Arabella",
+      "Aria",
+      "Astrid",
+      "Aurora",
+      "Aurelia",
+      "Belladonna",
+      "Calypso",
+      "Cassiopeia",
+      "Celeste",
+      "Cordelia",
+      "Diana",
+      "Dove",
+      "Echo",
+      "Eden",
+      "Eira",
+      "Elara",
+      "Elowen",
+      "Eowyn",
+      "Fable",
+      "Fiona",
+      "Gemma",
+      "Gwendolyn",
+      "Haven",
+      "Helena",
+      "Indigo",
+      "Iris",
+      "Isolde",
+      "Ivy",
+      "Jade",
+      "Juniper",
+      "Kalypso",
+      "Keira",
+      "Lotus",
+      "Luna",
+      "Lyra",
+      "Maeve",
+      "Meridian",
+      "Morgana",
+      "Nebula",
+      "Nova",
+      "Nyx",
+      "Octavia",
+      "Ophelia",
+      "Pandora",
+      "Persephone",
+      "Phoenix",
+      "Raven",
+      "Rhiannon",
+      "Sage",
+      "Selene",
+      "Seraphina",
+      "Seren",
+      "Starling",
+      "Sylvana",
+      "Tempest",
+      "Terra",
+      "Tammy",
+      "Vesper",
+      "Violetta",
+      "Willow",
+      "Winter",
+      "Zara",
+      "Zinnia"
+    ]
+  },
+  "nameFilterSettings": {
+    "Marcus": {
+      "replacements": [
+        "Alex",
+        "Ethan",
+        "Jason",
+        "Ryan",
+        "Owen",
+        "Nathaniel",
+        "Adrian",
+        "Colin",
+        "Scott",
+        "Blake"
+      ]
+    },
+    "Chen": {
+      "replacements": [
+        "Chang",
+        "Cheng",
+        "Chin",
+        "Chow",
+        "Chu",
+        "Chan",
+        "Chai",
+        "Chou"
+      ]
+    },
+    "Wei": {
+      "replacements": [
+        "Wang",
+        "Zhang",
+        "Huang",
+        "Guo",
+        "Shen",
+        "Tang",
+        "Song",
+        "Han"
+      ]
+    },
+    "Lin": {
+      "replacements": ["Liu", "Yang", "Chen", "Zhao", "Wu", "Xu", "Sun", "Ma"]
+    },
+    "Mira": {
+      "replacements": [
+        "Maya",
+        "Maria",
+        "Myra",
+        "Mina",
+        "Mara",
+        "Mila",
+        "Maia",
+        "Mena"
+      ]
+    },
+    "Elara": {
+      "replacements": [
+        "Thea",
+        "Cora",
+        "Nova",
+        "Vega",
+        "Astra",
+        "Selene",
+        "Orion",
+        "Cassie"
+      ]
+    },
+    "Pip": {
+      "replacements": [
+        "Bramble",
+        "Flicker",
+        "Nim",
+        "Sprout",
+        "Wren",
+        "Lark",
+        "Remy",
+        "Trinket"
+      ]
+    },
+    "Kira": {
+      "replacements": [
+        "Lena",
+        "Anya",
+        "Nyla",
+        "Isla",
+        "Freya",
+        "Ruby",
+        "Sasha",
+        "Zara"
+      ]
+    },
+    "Malik": {
+      "replacements": [
+        "Amir",
+        "Zahir",
+        "Khalid",
+        "Rashid",
+        "Tariq",
+        "Jamal",
+        "Samir",
+        "Karim"
+      ]
+    },
+    "Serra": {
+      "replacements": [
+        "Silvana",
+        "Thalia",
+        "Rowan",
+        "Linnea",
+        "Briar",
+        "Celeste",
+        "Faela",
+        "Sorina"
+      ]
+    }
+  }
+}

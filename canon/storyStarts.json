@@ -1,0 +1,41 @@
+{
+  "storyStarts": {
+    "Random": {
+      "name": "Random",
+      "description": "Fortune favors the bold. Begin your tale where chance decrees.",
+      "storyStart": "Generate a story start appropriate to the player's chosen traits. Draw on world lore to create a specific situation in a concrete location. The opening should present clear immediate circumstances while leaving many possible paths forward. Incorporate aspects of the character's background without forcing them into a predetermined narrative.",
+      "locations": [],
+      "locationAreas": [],
+      "isDefault": false
+    },
+    "The Tarkle Infestation": {
+      "name": "The Tarkle Infestation",
+      "description": "Your first contract as a mercenary trio has brought you to a lush tunnel-mound plagued by burrowing pests. Stand your ground against the encroaching tide of tarkles and secure the safety of the locals. Success here will cement your reputation as a reliable team.",
+      "storyStart": "You stand in the dim, bioluminescent glow of the garden tunnel alongside your two companions, listening to the frantic chittering of tarkles nearby. Direct the party to clear the nesting vermin from the earthen walls before they destroy the root-crop harvest. Utilize your combined combat skills to manage the narrow space and protect the village workers. Determine how your team coordinates their first strike to neutralize the infestation quickly.",
+      "locations": ["Fernwarg village"],
+      "locationAreas": [],
+      "startingPartyNPCs": [],
+      "startingItems": [],
+      "isDefault": false
+    },
+    "The Inn at Red Harvest": {
+      "name": "The Inn at Red Harvest",
+      "description": "Find yourself catching your breath at a bustling crossroads tavern. A quiet evening turns tense when a mysterious traveler forces an unwanted confrontation.",
+      "storyStart": "You are sitting at a sturdy wooden table in the Red Harvest inn, nursing a lukewarm ale as the evening trade winds rattle the shutters. Suddenly, a traveler slams a sealed scroll onto the table, demanding your immediate attention and claiming your party is the only one fit for a dangerous delivery. You must decide whether to engage with this frantic stranger or dismiss them before the innkeeper intervenes. Use the moment to establish your presence in the region and respond to the sudden escalation of social tension.",
+      "locations": ["Red Harvest"],
+      "locationAreas": [],
+      "startingPartyNPCs": [],
+      "isDefault": false
+    },
+    "Lost in the Verdant Reach": {
+      "name": "Lost in the Verdant Reach",
+      "description": "After a grueling trek through the dense undergrowth, you are surrounded by a pack of territorial fernwolves. Your survival hinges on your ability to negotiate with these wild creatures or fight your way out of their domain.",
+      "storyStart": "You wake up disoriented in the thick of the Verdant Reach, the air heavy with the scent of damp earth and aggressive musk. Three sleek fernwolves circle you, their eyes burning with a strange intensity as they pin you against a massive, moss-covered trunk. ",
+      "locations": ["Fernwarg village"],
+      "locationAreas": [],
+      "startingPartyNPCs": [],
+      "startingItems": [],
+      "isDefault": false
+    }
+  }
+}

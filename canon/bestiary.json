@@ -1,0 +1,376 @@
+{
+  "worldLore": {
+    "Auroch": {
+      "text": "Auroch: Wild unensouled cattle of the Deep Steppes and Long Steppe—massive bovines with bull-shoulders and horn-spreads the width of a wagon. Solitary bulls range the open grass; small breeding groups of cows and calves graze at distance. The Hofnar do not eat them, holding to the old kinship with their lifted cousins, but every other people will. A charging auroch goes through a cart and the man behind the cart, and herds spook into stampedes that level whatever they cross."
+    },
+    "Tuskboar": {
+      "text": "Tuskboar: Foul-tempered boar of the Reach margins, Whitestone fens, and Avenor backwoods. Carries plague—the meat must be cured with care or it kills the eater. Solitary or sow-with-young, charges anything that crosses its path. Tusks split a leg at the thigh; the small eyes are red and constantly weeping. Farmers around the Reach margins lose more children to tuskboars than to anything else in the wood."
+    },
+    "Crag-cat": {
+      "text": "Crag-cat: Lynx of the Shieldcaps, Hinderance Highlands, and Impasse heights. Pale-coated, ear-tufted, the size of a large dog at the shoulder. Solitary daylight hunter—takes goats and the occasional shepherd. Stalks across the scree on padded feet that leave no track and commits in a single leap from above. A crag-cat does not stalk what it cannot kill, and the leap is rarely wasted."
+    },
+    "Rhok": {
+      "text": "Rhok: Flightless ground-bird of the Long Steppe and the Sun-Scoured canyon floors—ostrich-built, tall as a man, with naked legs and a heavy plumed body. Kicks with a single splitting claw on each foot, the kick strong enough to disembowel a horse. Runs faster than a horse over distance and longer than a horse before it tires. Solitary or in mated pairs. Aggressive in the rutting season and indifferent the rest. Rhok plumes are worn at every festival in three kingdoms."
+    },
+    "Wisent": {
+      "text": "Wisent: Forest bison of the Reach river-valleys and meadow-corridors—shaggy, heavy-shouldered, dark-coated. Solitary bulls and small breeding groups graze the open stretches between stands of old-growth. A wisent that has not been disturbed will let a traveler pass at distance, but the distance is well-known to anyone who has lived through being told it. Closer than that and the bull charges, and a wisent charge does not stop until something stops it."
+    },
+    "Throatworm": {
+      "text": "Throatworm: Knee-thick burrower of the loam—four to six feet long when fully extended, segmented in dull chitin and ringed with hooked feeding-mouths. Erupts from beneath at close range and fights through rather than retreating. Mound-and-disturbance signs mark colony territory in the Reach margins, the Long Steppe edges, and Avenor pasture country. A grazing herd that goes still and looks at the ground has felt one moving below."
+    },
+    "Husk": {
+      "text": "Husk: Once human. Survivors of Wartide attacks where something drained them and let the body walk—usually the work of a Bloodthane, sometimes a Succor, sometimes older things in the deeper Hollows. Pale, bent, milky-eyed, mouths working without words. What was a person is gone. Reduced to primal instincts: hunger, fear, and the urge to return to a place that mattered. A husk drifts back toward the home it lived in for years, sometimes finding it, sometimes finding what replaced it. Bounty paid in most kingdoms. The bounty is the only mercy left to give them."
+    },
+    "Gristlemaw": {
+      "text": "Gristlemaw: Knee-high scaly thing, dull grey, heavily built around an oversized hinged jaw that takes up most of the head. Lurks in barrows, farmstead cellars, and the underspaces of old buildings. Takes one or two big meals a season—a sheep, a watchdog, a child gone too far in the dark—and rests between. Found alone or with a single mate. Slow, but the jaw closes faster than anyone expects, and a gristlemaw that has bitten a kneecap will brace its weight and drag."
+    },
+    "Pinker": {
+      "text": "Pinker: Hairless pale primate the size of a large dog—naked-skinned, knuckle-walking, climbs walls. One or two haunt a ruined building, a back-alley cellar, or the empty floor above a tavern's storage. Pries with long fingers, breaks shutters, takes infants and small livestock. Patient enough to scout a household for days before striking and clever enough to use simple tools—a pried board, a stolen knife, a weighted rope. The eyes are too forward-set for an animal and too cold for anything else."
+    },
+    "Drakehound": {
+      "text": "Drakehound: Wartide-bred war-dog. Waist-high at the shoulder, scaled along the spine and flanks, long-jawed, bred to run prey to exhaustion across open country. Mute pack-hunter—three to five, no baying. Found across the back-country of every region where the broken hosts left them and they bred wild. The pack does not bark, does not howl, does not bay. The first sign is the silence that comes when the wood-noises stop."
+    },
+    "Cliff-wyrm": {
+      "text": "Cliff-wyrm: Limbless serpent of the Sun-Scoured Plateau and the upper ranges of the Shieldcaps. Length of three wagons, thick as a man through the body, scales the color of the rock it suns itself on. Suns on flat stone in late afternoon, drops on prey from a cleft, constricts, swallows. A cliff-wyrm that has eaten will not eat again for weeks, but a cliff-wyrm that has not eaten will follow a caravan for days waiting for a straggler."
+    },
+    "Mawpig": {
+      "text": "Mawpig: Wartide-bred carrion-beast. Squat tusked thing the size of a calf, mouth that splits the skull horizontally on a hinged lower jaw. Eats anything organic—the dead of any side, the dying, the fallen, the freshly buried. Solo or paired across the wild back-country of every region. Charges, doesn't ambush. The name is the right one. The mouth is most of what it is."
+    },
+    "Striglaw": {
+      "text": "Striglaw: Tall thin biped, twin pairs of arms—upper pair gripping, lower pair barbed. Wartide-bred terror-troops of the lost campaigns, now solitary wanderers in the Reach back-country, the Impasse, and the Hollows fringes. Walks the woodland in plain view and picks fights with anything it crosses. The four-armed silhouette is the warning. By the time a traveler is close enough to count the arms, the traveler is too close."
+    },
+    "Ulk": {
+      "text": "Ulk: Slime, dog-sized to bull-sized depending on age, semi-firm to the touch like very soft rubber, semi-transparent amber. Cuts under a blade rather than parts around it—the body holds shape but yields to edge. Ulk reproduce by hosting their seed-pearls inside larger animals, who pass them later; the engulfing is the first stage, and ulk will engulf prey of any gender to implant. Found in old galleries, ruin basements, Echoing Hollow, and the abandoned Whitestone mines. Slow but committed in pursuit, and an ulk that has scented a host does not lose the scent."
+    },
+    "Slogger": {
+      "text": "Slogger: Aggressive slug the size of a calf—slate-grey, glistening, slow but committed. Marsh edges of the Whitestone, Lake Wildering shallows, and Reach bog-pools. Acid mucus strips contact—a hand laid on a slogger comes back to the bone. The blunt charge is what kills, the weight of the body breaking what it rolls over. The wide silver track through reed and mud marks where one has gone, and the track does not lie."
+    },
+    "Brood": {
+      "text": "Brood: Cart-sized spider-thing, abdomen heavy with clutch, eight legs, six clustered eyes that catch lantern-light wrong. Lairs in deep Reach old-growth, the cave systems of the Shieldcap foothills and the Impasse, abandoned galleries, and Hollows fringes. The bite paralyzes; the ovipositor implants regardless of host's gender, into mouth, throat, or below. Hosts mostly survive. The Brood itself is a real fight—heavy chitin from above, abdomen vulnerable from below. Larders contain living people who can be freed if the Brood falls before they do."
+    },
+    "Hookwight": {
+      "text": "Hookwight: Long pallid serpent the length of two men, jaw hinged to swallow what its head can clear. Grassland and meadow country across the continent—Long Steppe, Reach river-meadows, Avenor pasture-edges. Strikes from cover but commits and fights through rather than retreating. Venom causes a deep slackness in the muscle, a numbness that walks the body part by part. A man bitten and standing has minutes before he is a man bitten and lying down."
+    },
+    "Beetlebull": {
+      "text": "Beetlebull: Ox-sized horned beetle of the Reach margins, Long Steppe edges, and Sun-Scoured canyon floors. Solitary or paired. Plates the back against pursuit—the carapace will turn an arrow at oblique angle—and charges with a single great horn that lifts what it strikes. Slow to turn. Fast in a straight line. A beetlebull on the charge sounds like a small wagon coming through the brush."
+    },
+    "Mauler": {
+      "text": "Mauler: Ogre. Twelve feet tall, slab-shouldered, club-armed, lone keeper of a stretch of road or a pass. Builds itself a rough den from logs and dragged stone and leaves bones outside as a marker. Found on overland routes across the Reach, the Hinderance, and the Impasse. Slow, but cunning enough to set a simple ambush of fallen logs and dropped stones. Takes captives back to the den for use over days. A mauler does not eat its captives quickly, and a captive who fights well lives longer."
+    },
+    "Bridge-troll": {
+      "text": "Bridge-troll: Squat broad troll of river-crossings and old culverts—Lake Wildering tributaries, Avenor backcountry, Reach river-valleys. Lairs under stone bridges, in collapsed culverts, in the deep weed-shadow at the foot of an old fording-stone. Speaks basic common-tongue, enough to name a price and curse a refusal. Demands toll in food, livestock, or person. Will let payers pass. Will not let non-payers pass. Skin grows back from wounds slowly but not from fire."
+    },
+    "Skarn": {
+      "text": "Skarn: High-country troll of the Shieldcap upper passes and the Sun-Scoured plateau heights. Stone-skinned, two heads, the second mostly silent. Hunts goats and travelers. Lairs in glacier hollows and slot-canyon overhangs where the wind carries the smell of its kills away. Slow on level ground and terrifying on broken ground—the stone-skin is heavy and the legs are short, but on the cliff-faces a skarn climbs like the cliff itself has decided to come down on you."
+    },
+    "Skellach": {
+      "text": "Skellach: Oxen-legged horned humanoid, tall as a man, knot-bearded, walks woodland clearings and ruin courtyards in the Reach and Avenor backwoods. Hunts alone or in pairs. Eats fruit and keeps an orchard-camp—a stretch of woodland tended in its own slow way, fruit trees encouraged, brambles cleared, bound captives kept for the games it likes to play. Speaks well, with a slow rural cadence, and enjoys conversation when not provoked. Fights with a heavy wood stave, longer than a man, used two-handed in a wide-arc style. Takes captives of either sex back to the orchard and binds them with woven vine—a particular fetish for the binding itself, and for letting other creatures of the wood take their turn with the bound. Releases them after, into the forest, dazed but living. Will sometimes accept a basket of good fruit and a length of cord in trade for not pressing the matter further."
+    },
+    "Imp": {
+      "text": "Imp: Knee-high demonic remnant. Red or ash-grey skin, vestigial wings that don't carry weight, prehensile tail, sharp teeth. Solo encounters in ruins, cellars, and Hollows-fringe back-rooms. Small fire-magic—a thrown handful of flame, a burning palm-print on flesh—and a cunning mean enough to be a real fight in a closed room. Talkative, and most imps will negotiate before committing to violence. Their offers are clever, their terms unfavorable, and the small print binds."
+    },
+    "Succor": {
+      "text": "Succor: Female-form demonic remnant, beautiful in a wrong way the mind smooths over until too late. Walks the road in plain sight near Hollows-fringes and old battlefields. Speaks with a warmth that is its first weapon. Charms by voice and touch, drains the charmed over a single night, leaves a Husk. Will fight directly when the charm fails—claws extend, the mouth opens wider than it should. A traveler who refuses the charm cleanly can sometimes parley; a succor that has been refused twice in the same season can be bargained with at unusually fair terms, by her standards."
+    },
+    "Goret": {
+      "text": "Goret: Imp's larger cousin. Waist-high, thickset, broken horns, drools coal-smoke. Carries a crude iron weapon and uses it competently. Speaks in a low rasping common-tongue, swears constantly, prefers haggling to fighting when the haggling pays better. Dens in pairs in old foundries, abandoned galleries, and Hollows-fringe ruins. Will fight to the death over a hoard."
+    },
+    "Glimmercat": {
+      "text": "Glimmercat: House-cat-sized, opalescent fur, eyes that hold a slow inner light. Solitary in open country across the continent—meadows, hedgerows, ruin-margins, the edges of cultivated land. Skittish but curious. A glimmercat will follow a traveler at distance for an afternoon, sit at the edge of a campfire, watch the night through, and be gone before dawn. Mana-touched in the small way that minor magical beasts are. Hedge-witches keep a stocked larder of glimmercat parts; the witch-academies do not bother."
+    },
+    "Lumefox": {
+      "text": "Lumefox: Red-fox-sized, coat shifting between russet and silver depending on the angle of light, brush-tail tipped white. Solitary in meadows, hedgerows, and ruin-margins across the continent. Common enough to grind, valuable enough to bother—the bulk of the licensed Avenorian witch-trade is lumefox. Trapping is a profession in three kingdoms. A lumefox is intelligent in the quiet watching way of magical beasts and learns the lay of a trap-line within a season. The honest trappers replace their lines twice a year. The dishonest ones lose their hands."
+    },
+    "Lampfowl": {
+      "text": "Lampfowl: Pheasant-sized ground bird of the Reach edges and the Whitestone uplands. Tail feathers glow soft yellow at dusk, brightest in the hour after sundown. Flightless, runs and fights when cornered—the spurred legs are heavy and the beak is hooked. A lampfowl roost is a faint glow under the brush at twilight. Hedge-witches use the tail feathers for minor scrolls and the eggs for filling work that does not need much."
+    },
+    "Sylvan": {
+      "text": "Sylvan: Male humanoid magical creature, full-grown the size of a slight man, skin pearl or moss-green, found alone near old wells, deep pools, and sacred springs in the Reach and Avenor foothills. Beautiful in a still alien way, mute but watchful, fights with a small bone knife and minor water-magic. Mana-rich in the way a man is mana-rich, and far more so. Captured alive sells for many times the kill-price; the witch-academies want them for filling work, and a sylvan in good condition can fill a senior witch in a single session—the highest-quality donor source short of a Glasshorn. Officially forbidden in most kingdoms. Licensed in most kingdoms. The trade is ugly and most know it."
+    },
+    "Naia": {
+      "text": "Naia: Female counterpart to the sylvan, found in the same waters and groves. Beautiful, mute, fights with a bone knife and minor water-magic. Cannot fill a witch—the magical asymmetry that runs through human magic runs through magical creatures too—but a witch with a stocked larder of naia parts can extend a single filling much further than otherwise. The kill-trade hunts them; the living-trade does not bother. The naia's only protection from the kill-trade is that the witch who needs naia parts is rarely the witch who has the men to find them."
+    },
+    "Stagling": {
+      "text": "Stagling: Fawn-sized horned creature of the Reach meadow-corridors. Antlers carry a visible mana-glow at first light, brightest in the hour before sunrise. Runs but does not flee far. A common starter quarry for mana-hunters in their first season. Antlers grow back annually if the creature is spared, and the higher-grade trade is a managed harvest—Avenorian licensed houses keep stagling-meadows in the Reach foothills and pay foresters to keep the herds."
+    },
+    "Pyrelynx": {
+      "text": "Pyrelynx: Cat the size of a wolf, coat the color of banked coals, warm to the touch even in winter. Sun-Scoured Plateau and southern Shieldcap foothills. Solitary, ambushes once and fights through. The warm-touch coat is the early-warning—a pyrelynx that has been near a place leaves the stone warm for an hour, and a hunter who knows the sign can tell when one has just left a kill."
+    },
+    "Maulerbear": {
+      "text": "Maulerbear: Wartide-bred bear, twice the size of a true bear, shaggy and scarred, jaw plated with bony ridges. Solitary, claims a stretch of forest or broken country and walks it openly. Reach interior, Shieldcap foothills, Hinderance back-country. Will pursue across territories—the maulerbear that has decided you are its kill follows you home. Speaks little, but speaks—a slow rumbling common-tongue, used mostly to taunt and to name what it intends to do."
+    },
+    "Bloodthane": {
+      "text": "Bloodthane: Wartide-officer remnant. Tall, chitin-plated, intelligent, command-class. Lairs in fortified ruins on the Hollows fringes—old keeps, ravine-fortresses, ruined towers—and walks the parapet of its claimed ground in the manner of the lord it once was. Drains humans to Husks by long touch, the touch lasting hours, the drained walking out at the end. Speaks fluently in any tongue it has heard, holds court in its ruin, and will receive emissaries who arrive correctly. Most emissaries do not arrive correctly. Commands lesser Wartide things in its territory—drakehound packs, husks, occasionally a Brood that has settled within reach."
+    },
+    "Kelker": {
+      "text": "Kelker: Twelve feet tall, two stilt-legs, crown of arms around a central feeding-orifice. Strides across broken country at impossible speed—the stilt-legs cover ground a horse cannot. Sun-Scoured Plateau, the Impasse, Hollows fringes. Speaks rarely, in a voice that comes from the feeding-orifice and is not pleasant to hear. What it says is usually a question, and the questions are old—older than any human kingdom, older than the Wartide that bred it, old in a way that suggests the kelker is asking on behalf of something that has not yet arrived."
+    },
+    "Loam-Drinker": {
+      "text": "Loam-Drinker: Vast burrowing worm of the deep tunnels and the worked-out homeland country. Surfaces in old pit-works to feed—the ground heaves, the head clears the soil, the segmented body keeps coming and coming. Speaks through the ground itself when it chooses to: a low resonant common-tongue felt in the chest before it is heard in the ear. The conversations are rare and remembered. Eats the soil and what is in it, including ore-veins, including buried things, including the dead. A confirmed kill is a generational event. Most encounters are not kills."
+    },
+    "Centaur-thane": {
+      "text": "Centaur-thane: Wartide-bred centauroid. Horse-bodied, humanoid torso, bull-thick through the chest and shoulders—heavier and crueler than the elegant centaurs of older fables. Roams the back-country of the Long Steppe and Reach margins in bands of three to five led by a thane. Speaks well, with the formality of an old soldiery, and the thane will parley before a fight if the parley promises better return than the fight. Takes captives of either sex on raids and breeds them in a back-camp for stock. Bands fightable on the open ground; the thane is the boss kill, armored, heavy axe, war-cry that staggers anyone within fifty paces."
+    }
+  },
+  "npcTypes": {
+    "auroch": {
+      "name": "auroch",
+      "description": "[Tier 1] [Common] Massive bovine with bull-shoulders and a horn-spread the width of a wagon. Charges with crushing weight when threatened.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["bludgeoning"],
+      "immunities": []
+    },
+    "tuskboar": {
+      "name": "tuskboar",
+      "description": "[Tier 1] [Common] Foul-tempered, plague-carrying boar with curved tusks. Charges on sight.",
+      "vulnerabilities": ["piercing"],
+      "resistances": [],
+      "immunities": ["poisoning"]
+    },
+    "crag-cat": {
+      "name": "crag-cat",
+      "description": "[Tier 1] [Common] Pale-furred lynx with ear-tufts. Stalks from above and commits in a single leap.",
+      "vulnerabilities": ["piercing"],
+      "resistances": [],
+      "immunities": []
+    },
+    "rhok": {
+      "name": "rhok",
+      "description": "[Tier 1] [Common] Tall flightless bird with a single splitting claw on each foot. Runs down prey, kicks to disembowel.",
+      "vulnerabilities": ["piercing"],
+      "resistances": [],
+      "immunities": []
+    },
+    "wisent": {
+      "name": "wisent",
+      "description": "[Tier 1] [Common] Heavy-shouldered forest bison. Charges if approached past its tolerance.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["bludgeoning"],
+      "immunities": []
+    },
+    "throatworm": {
+      "name": "throatworm",
+      "description": "[Tier 2] [Common] Knee-thick segmented burrower with hooked feeding-mouths. Erupts from below and fights through.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["piercing", "slashing"],
+      "immunities": []
+    },
+    "husk": {
+      "name": "husk",
+      "description": "[Tier 2] [Common] Pale, bent, milky-eyed remnant of a drained human. Reduced to primal instincts—hunger, fear, the urge to return.",
+      "vulnerabilities": ["light", "fire"],
+      "resistances": ["dark"],
+      "immunities": []
+    },
+    "gristlemaw": {
+      "name": "gristlemaw",
+      "description": "[Tier 2] [Common] Knee-high scaly grey lurker with an oversized hinged jaw. Bites and drags.",
+      "vulnerabilities": ["light"],
+      "resistances": [],
+      "immunities": []
+    },
+    "pinker": {
+      "name": "pinker",
+      "description": "[Tier 2] [Uncommon] Hairless pale primate the size of a large dog. Climbs walls, pries, uses simple tools.",
+      "vulnerabilities": ["fire"],
+      "resistances": [],
+      "immunities": []
+    },
+    "drakehound": {
+      "name": "drakehound",
+      "description": "[Tier 3] [Common] Waist-high scaled war-dog. Mute pack-hunter, three to five, no baying.",
+      "vulnerabilities": ["fire"],
+      "resistances": ["piercing", "dark"],
+      "immunities": []
+    },
+    "cliff-wyrm": {
+      "name": "cliff-wyrm",
+      "description": "[Tier 3] [Uncommon] Limbless serpent the length of three wagons. Constricts and swallows whole.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["slashing"],
+      "immunities": []
+    },
+    "mawpig": {
+      "name": "mawpig",
+      "description": "[Tier 3] [Common] Calf-sized tusked carrion-beast. Mouth that splits the skull horizontally. Charges on sight.",
+      "vulnerabilities": ["light"],
+      "resistances": ["dark"],
+      "immunities": ["poisoning"]
+    },
+    "striglaw": {
+      "name": "striglaw",
+      "description": "[Tier 3] [Uncommon] Tall thin biped with two pairs of arms—upper gripping, lower barbed. Picks fights with anything it crosses.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["slashing"],
+      "immunities": []
+    },
+    "ulk": {
+      "name": "ulk",
+      "description": "[Tier 3] [Uncommon] Semi-firm amber slime, dog-sized to bull-sized. Cuts under a blade. Engulfs prey to implant seed-pearls.",
+      "vulnerabilities": ["fire"],
+      "resistances": ["piercing", "slashing", "bludgeoning", "water"],
+      "immunities": ["poisoning"]
+    },
+    "slogger": {
+      "name": "slogger",
+      "description": "[Tier 3] [Uncommon] Calf-sized aggressive slug with acid mucus. Blunt charge breaks bone.",
+      "vulnerabilities": ["fire"],
+      "resistances": ["piercing", "slashing", "water"],
+      "immunities": ["poisoning"]
+    },
+    "brood": {
+      "name": "brood",
+      "description": "[Tier 3] [Uncommon] Cart-sized spider-thing with heavy abdomen. Paralytic bite, ovipositor implants regardless of host's gender. Vulnerable from below.",
+      "vulnerabilities": ["fire"],
+      "resistances": ["piercing", "slashing", "dark"],
+      "immunities": ["poisoning"]
+    },
+    "hookwight": {
+      "name": "hookwight",
+      "description": "[Tier 3] [Common] Pallid serpent the length of two men, hinged jaw. Strikes from cover, slackness-venom, fights through.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["piercing"],
+      "immunities": ["poisoning"]
+    },
+    "beetlebull": {
+      "name": "beetlebull",
+      "description": "[Tier 3] [Common] Ox-sized horned beetle. Charges with a single great horn, plated back, slow to turn.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["piercing", "slashing"],
+      "immunities": ["poisoning"]
+    },
+    "mauler": {
+      "name": "mauler",
+      "description": "[Tier 4] [Uncommon] Twelve-foot ogre, slab-shouldered, club-armed. Lone road-keeper. Sets simple ambushes, takes captives.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["bludgeoning"],
+      "immunities": []
+    },
+    "bridge-troll": {
+      "name": "bridge-troll",
+      "description": "[Tier 4] [Uncommon] Squat broad troll under bridges and culverts. Speaks basic common-tongue, demands toll. Regenerates except from fire.",
+      "vulnerabilities": ["fire"],
+      "resistances": ["piercing", "slashing", "bludgeoning"],
+      "immunities": []
+    },
+    "skarn": {
+      "name": "skarn",
+      "description": "[Tier 4] [Rare] Two-headed stone-skinned troll of high country. Slow on flat ground, terrifying on broken ground.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["piercing", "slashing", "fire"],
+      "immunities": []
+    },
+    "skellach": {
+      "name": "skellach",
+      "description": "[Tier 5] [Uncommon] Oxen-legged horned humanoid, tall as a man. Speaks fluently. Wields heavy wood stave two-handed. Binds captives with woven vine in an orchard-camp.",
+      "vulnerabilities": ["light"],
+      "resistances": ["dark", "piercing"],
+      "immunities": []
+    },
+    "imp": {
+      "name": "imp",
+      "description": "[Tier 5] [Uncommon] Knee-high demonic remnant. Red or ash-grey skin, vestigial wings, prehensile tail. Small fire-magic. Negotiates first.",
+      "vulnerabilities": ["light", "water"],
+      "resistances": ["fire", "dark"],
+      "immunities": ["poisoning"]
+    },
+    "succor": {
+      "name": "succor",
+      "description": "[Tier 5] [Rare] Female-form demonic remnant. Beautiful in a wrong way. Charms by voice and touch, drains charmed over a single night to a Husk. Claws when forced.",
+      "vulnerabilities": ["light"],
+      "resistances": ["dark", "arcane"],
+      "immunities": ["psychic"]
+    },
+    "goret": {
+      "name": "goret",
+      "description": "[Tier 5] [Uncommon] Waist-high demonic remnant, thickset, broken horns, drools coal-smoke. Crude iron weapon, used well. Haggles before fighting.",
+      "vulnerabilities": ["light", "water"],
+      "resistances": ["fire", "dark", "slashing"],
+      "immunities": []
+    },
+    "glimmercat": {
+      "name": "glimmercat",
+      "description": "[Tier 6] [Common] House-cat-sized magical beast with opalescent fur and inner-lit eyes. Skittish but curious. Minor mana-bearing.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["arcane"],
+      "immunities": []
+    },
+    "lumefox": {
+      "name": "lumefox",
+      "description": "[Tier 6] [Common] Fox with russet-and-silver shifting coat. Solitary, mana-bearing, the staple of the Avenorian witch-trade.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["arcane"],
+      "immunities": []
+    },
+    "lampfowl": {
+      "name": "lampfowl",
+      "description": "[Tier 6] [Common] Pheasant-sized flightless ground bird. Tail feathers glow soft yellow at dusk. Runs and fights with spurred legs and hooked beak.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["arcane"],
+      "immunities": []
+    },
+    "sylvan": {
+      "name": "sylvan",
+      "description": "[Tier 6] [Rare] Male humanoid magical creature, slight-man-sized, pearl or moss-green skin. Mute. Bone knife, minor water-magic. Highly mana-rich.",
+      "vulnerabilities": ["piercing", "fire"],
+      "resistances": ["water", "arcane"],
+      "immunities": []
+    },
+    "naia": {
+      "name": "naia",
+      "description": "[Tier 6] [Rare] Female humanoid magical creature, slight-woman-sized, pearl or moss-green skin. Mute. Bone knife, minor water-magic. Reagent-source, not filling-source.",
+      "vulnerabilities": ["piercing", "fire"],
+      "resistances": ["water", "arcane"],
+      "immunities": []
+    },
+    "stagling": {
+      "name": "stagling",
+      "description": "[Tier 6] [Common] Fawn-sized horned magical beast. Antlers carry visible mana-glow at first light. Runs but does not flee far.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["arcane"],
+      "immunities": []
+    },
+    "pyrelynx": {
+      "name": "pyrelynx",
+      "description": "[Tier 6] [Uncommon] Wolf-sized cat with banked-coal coat, warm to the touch. Solitary. Ambushes once, fights through.",
+      "vulnerabilities": ["water"],
+      "resistances": ["fire", "arcane"],
+      "immunities": []
+    },
+    "maulerbear": {
+      "name": "maulerbear",
+      "description": "[Tier 7] [Rare] Wartide-bred bear, twice the size of a true bear. Bony jaw-ridges. Speaks slow common-tongue, mostly to taunt.",
+      "vulnerabilities": ["light", "fire"],
+      "resistances": ["piercing", "slashing", "dark"],
+      "immunities": ["poisoning"]
+    },
+    "bloodthane": {
+      "name": "bloodthane",
+      "description": "[Tier 7] [Rare] Wartide-officer remnant, tall and chitin-plated. Drains humans to Husks by long touch. Speaks any tongue heard, holds court, commands lesser Wartide kin.",
+      "vulnerabilities": ["light"],
+      "resistances": ["dark", "arcane", "slashing"],
+      "immunities": ["poisoning", "psychic"]
+    },
+    "kelker": {
+      "name": "kelker",
+      "description": "[Tier 7] [Very Rare] Twelve-foot stilt-legged horror with a crown of arms around a feeding-orifice. Strides at impossible speed. Asks old questions.",
+      "vulnerabilities": ["bludgeoning"],
+      "resistances": ["piercing", "slashing", "dark"],
+      "immunities": ["poisoning", "psychic"]
+    },
+    "loam-drinker": {
+      "name": "loam-drinker",
+      "description": "[Tier 7] [Very Rare] Vast burrowing worm. Surfaces in old pit-works. Speaks through the ground in low resonant common-tongue. Eats soil and what's in it.",
+      "vulnerabilities": ["light"],
+      "resistances": ["piercing", "slashing", "bludgeoning", "dark"],
+      "immunities": ["poisoning", "psychic"]
+    },
+    "centaur-thane": {
+      "name": "centaur-thane",
+      "description": "[Tier 7] [Rare] Wartide-bred centauroid, bull-thick. Bands of three to five under a thane. Parleys when it pays. Heavy axe, staggering war-cry.",
+      "vulnerabilities": ["piercing"],
+      "resistances": ["bludgeoning", "dark"],
+      "immunities": []
+    }
+  }
+}

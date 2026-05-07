@@ -1,0 +1,53 @@
+{
+  "skills": {
+    "acrobatics": {
+      "name": "acrobatics",
+      "type": "utility",
+      "attribute": "dexterity",
+      "description": "Improves the player's agility and balance, enabling them to perform acrobatic maneuvers.",
+      "startingItems": []
+    },
+    "athletics": {
+      "name": "athletics",
+      "type": "utility",
+      "attribute": "strength",
+      "description": "Improves overall physical performance, enhancing running, jumping, climbing, and other physical feats.",
+      "startingItems": []
+    },
+    "intimidation": {
+      "name": "intimidation",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Allows the player to use fear as a tool, potentially allowing them to scare off enemies or influence confrontations.",
+      "startingItems": []
+    },
+    "investigation": {
+      "name": "investigation",
+      "type": "utility",
+      "attribute": "intelligence",
+      "description": "Enables careful examination and analysis of surroundings, helping the player uncover clues and secrets.",
+      "startingItems": []
+    },
+    "performance": {
+      "name": "performance",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Enables the player to entertain others through acts such as dancing, singing, or acting.",
+      "startingItems": []
+    },
+    "persuasion": {
+      "name": "persuasion",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Enhances the player's ability to influence others through dialogue.",
+      "startingItems": []
+    },
+    "survival": {
+      "name": "survival",
+      "type": "utility",
+      "attribute": "constitution",
+      "description": "Improves the player's ability to endure harsh environments, find food and water, and build shelters.",
+      "startingItems": []
+    }
+  }
+}

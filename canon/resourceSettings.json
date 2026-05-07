@@ -1,0 +1,35 @@
+{
+  "resourceSettings": {
+    "health": {
+      "name": "health",
+      "initialValue": 80,
+      "maxValue": 80,
+      "rechargeRate": 1,
+      "restRechargeMultiplier": 1,
+      "color": "#ef4444",
+      "gainPerLevel": 10,
+      "isHealth": true,
+      "usageInstructions": "### Health Changes\n- Small injuries: -1 to 15% player health\n- Medium injuries: -5 to 25% player health\n- Massive injuries: -15 to 50% of player health\n- Normal Healing potions +30 - +40\n- Bandages + 20\n- Waking from unconsciousness: return to between half health and full health, depending on how well your recovery was.\n- Being revived from death: return to full health.\n### Don't Deduct Health When\n- The story mentions treated or untreated wounds\n- Story mentions pain from a wound\n- When unconscious or carried\n- An environment is generally dangerous, but does not explicitly damage the character\n- A character is only looking around. Look around is a safe action."
+    },
+    "male mana": {
+      "name": "male mana",
+      "initialValue": 50,
+      "maxValue": 100,
+      "rechargeRate": 5,
+      "restRechargeMultiplier": 2,
+      "color": "#3b82f6",
+      "gainPerLevel": 5,
+      "usageInstructions": "This resource is specific to human males. All other characters start with zero mana and gain nothing per level."
+    },
+    "female mana": {
+      "name": "female mana",
+      "initialValue": 0,
+      "maxValue": 120,
+      "rechargeRate": 0,
+      "restRechargeMultiplier": 0,
+      "color": "#ec4899",
+      "gainPerLevel": 10,
+      "usageInstructions": "This resource is specific to human females, particularly witches, representing their stored pool of magical energy. It is used to fuel spells and does not recharge. It must be replenished by a male."
+    }
+  }
+}
