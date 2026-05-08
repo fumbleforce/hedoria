@@ -6,15 +6,31 @@ A fantasy worldbuilding project. The world is called Hedoria; the game/setting i
 
 - `full_def.json` — full system/game definition
 - `ludion_format_and_inspiration.json` — An external project that we can get schema and inspiration from.
+- `canon` dir contains established elements of the world
+- `candidates` dir contains suggestions and not yet accepted content
+- `build` dir contains built combined files
 
 ## Schema
 
-- Use the `ludion_format_and_inspiration.json` file to see the format to use.
+- `ludion_format_and_inspiration.json` is the **validated** schema source. Always consult it for the correct field names and shape before writing any canon-bound content. There is no validation harness, so schema discipline matters.
+- Existing files in `canon/` are also reliable references — they've already been adapted to Hedoria — but ludion is the source of truth when in doubt.
 
-## New generated content
+## Candidate workflow
 
-- Always write to the `candidates` dir for quality control.
-- NEVER write directly to `canon`
+All new or revised content goes through `candidates/`:
+
+1. **Never write to `canon/` directly.** Write to `candidates/` only.
+2. **Candidate files mirror canon block shape.** Top-level keys are canon block names (`npcTypes`, `npcs`, `factions`, etc.). Multiple blocks in one file is fine — the file is just a change batch.
+3. **Updates and additions are the same operation.** Both are entries keyed by name; the merger overwrites or inserts by key. Don't invent wrapper keys like `npcTypeUpdates`.
+4. **No invented fields.** Every field on every entry must exist in the ludion schema. No `_comment`, no ad-hoc metadata. If you need to leave a note for the reviewer, put it in your reply, not in the file.
+5. **Block → canon file** is resolved by `canon/_map.json`. Most blocks have one home. Two blocks split across files (see `_split` in the map):
+   - `npcTypes`: race/profession types → `npcTypes.json`; creatures (beasts, trolls, demonic remnants, magical beasts, greater monsters) → `bestiary.json`.
+   - `worldLore`: general lore → `worldLore.json`; creature-lore prose → `bestiary.json`.
+6. **Filenames in `candidates/`** are freeform — files get reviewed, merged into canon, and deleted, so naming is just for human readability.
+
+## Build
+
+`build/full_def.json` is the merged output of all canon files. It's generated; don't edit it directly.
 
 ## Google Drive source documents
 

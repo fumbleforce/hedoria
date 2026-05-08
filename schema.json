@@ -1,0 +1,3573 @@
+[
+  {
+    "key": "abilities",
+    "title": "Abilities",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Named actions or powers with descriptions, numeric bonuses, cooldowns, and prerequisite chains. The combat and skill systems reference these by name.",
+    "role": "Defines what players can do in fights and skill challenges beyond basic attacks.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "abilities.*.name",
+        "description": "The ability's display name shown in the character sheet and during combat narration.",
+        "jsonType": "string",
+        "example": "\"Power Strike\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "abilities.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "abilities.*.description",
+        "description": "What the ability does in both fiction and mechanics. Should explain the effect clearly enough that the AI can narrate it correctly without additional context.",
+        "jsonType": "string",
+        "example": "\"Devastating overhead strike.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "abilities.entity.description",
+        "limitIds": ["abilities.*.description"]
+      },
+      {
+        "path": "abilities.*.requirements",
+        "description": "An array of prerequisite gates: each entry has a type (`resource`, `attribute`, `skill`, `characterLevel`, or `trait`), a variable target, and an amount threshold. All conditions must be met before the ability is available.",
+        "jsonType": "{ type: \"resource\" | \"attribute\" | \"skill\" | \"characterLevel\" | \"trait\", variable: string, amount: number }[]",
+        "example": "[{ \"type\": \"skill\", \"variable\": \"two_handed_weapons\", \"amount\": 3 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "abilities.entity._requirements",
+        "limitIds": ["abilities.*.requirements"]
+      },
+      {
+        "path": "abilities.*.bonus",
+        "description": "A numeric modifier added to relevant rolls when this ability is active or triggered. Voyage now clamps the applied success contribution to skillSettings.maxSkillSuccessLevel, so values above that cap behave as capped bonuses.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "abilities.entity.bonus",
+        "limitIds": []
+      },
+      {
+        "path": "abilities.*.cooldown",
+        "description": "The number of turns or ticks that must pass before this ability can be used again after activation. Set to 0 for abilities with no cooldown.",
+        "jsonType": "number",
+        "example": "3",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "abilities.entity.cooldown",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "abilities.count",
+        "label": "Abilities — number of entries",
+        "path": "abilities",
+        "kind": "collection",
+        "maxEntries": 1000
+      },
+      {
+        "id": "abilities.*.description",
+        "label": "Abilities — each description",
+        "path": "abilities.*.description",
+        "kind": "field",
+        "maxChars": 2000
+      },
+      {
+        "id": "abilities.*.requirements",
+        "label": "Abilities — requirements array length",
+        "path": "abilities.*.requirements",
+        "kind": "array",
+        "maxEntries": 10
+      }
+    ]
+  },
+  {
+    "key": "aiBlocks",
+    "title": "AI blocks",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Reusable instruction fragments or structured prompts that other systems can include by reference—helpful for large worlds that reuse the same policy text.",
+    "role": "Deduplicates long instruction text across tasks.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "aiInstructions",
+    "title": "AI instructions",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "Task-specific instruction blocks the model consults for story generation, combat narration, item handling, and more. This is the main dial for how strictly the AI follows your tone, mechanics, and safety rails.",
+    "role": "Steers model behavior across generation tasks: opening scenes, combat, NPC behavior, DM voice, and economy updates.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "aiInstructions.generateStory.Character Behavior",
+        "description": "Turn-by-turn instructions for how the AI portrays characters during active play. Covers voice, dialog habits, how NPCs speak relative to their personality, and pacing rules for reactive narration.",
+        "jsonType": "string",
+        "example": "\"NPCs speak in dialect matching their region. Villains never monologue.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateStory.Style Principles",
+        "description": "Persistent prose constraints that apply to every ongoing narration turn. Use this to lock in sentence structure, vocabulary register, what to avoid (e.g. \"never use the word 'suddenly'\"), and atmosphere maintenance.",
+        "jsonType": "string",
+        "example": "\"Short sentences during combat. No adverbs.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateStory.Victory and Downtime",
+        "description": "Current Voyage field for post-victory pacing. Use this to tell the narrator how to handle rest, celebration, aftermath scenes, and breathing room after a clear win without immediately inventing a new threat or escalation.",
+        "jsonType": "string",
+        "example": "\"After a clear win, let the scene breathe and do not invent a fresh escalation.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateStory.custom",
+        "description": "Freeform override block merged into story generation prompts. Anything here supplements — not replaces — the structured keys above. Use for world-specific quirks that don't fit the standard buckets.",
+        "jsonType": "string",
+        "example": "\"## Damage Instruction\\nGreat sword: strong vs hide, soft skin. (+10) on charge.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateInitialStart.Opening Structure",
+        "description": "Defines how the very first scene is constructed: where to open (setting, moment in time), whose POV to use, how much exposition to front-load, and when to hand narrative control back to the player. Official V32 sample worlds use the same named-block trio as V33 (`Opening Structure`, `Style Principles`, `custom`) — no separate legacy key set for this task in those fixtures.",
+        "jsonType": "string",
+        "example": "\"Open mid-action. Establish the inciting threat in the first paragraph.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateInitialStart.Style Principles",
+        "description": "Prose rules that apply specifically to the opening scene. May differ from ongoing narration — for example you might require a more cinematic, hook-forward style for the first turn.",
+        "jsonType": "string",
+        "example": "\"\\n## Style Principles\\n- Be specific, concise and concrete\\n- Use simple, direct, literal language\\n- Favor strong verbs and nouns over adjectives and adverbs\\n- Vary sentence length but prefer shorter sentences\\n- Use dialog to reveal character and provide story context\\n- Prefer dialogue to description\\n- Be grounded yet original, avoiding clichés\\n- Avoid conceptual or worldbuilding weirdness, but feel free to make characters quirky where appropriate\\n\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateInitialStart.custom",
+        "description": "Additional first-scene instructions not covered by the structured keys. Useful for ensuring specific NPCs are introduced, particular locations are described, or that a tone-setting line appears.",
+        "jsonType": "string",
+        "example": "\"##Game Flow\\nStart with a Damaged Great Jagras.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateActionInfo.custom",
+        "description": "Controls how the AI resolves action outcomes, contested checks, and combat or skill adjudication. Specify how to narrate success degrees, how much mechanical crunch to surface in prose, and how to handle ambiguous player inputs.",
+        "jsonType": "string",
+        "example": "\"Describe degrees of success. A miss still moves the story forward.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateNPCIntents.custom",
+        "description": "Governs how NPCs choose their tactical and social goals during turns. Set priorities (self-preservation, loyalty, greed), how they read player actions, and how they escalate or de-escalate.",
+        "jsonType": "string",
+        "example": "\"NPCs prioritise self-preservation. Cowards flee at 25% health.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateNewNPC.custom",
+        "description": "Instructions for on-the-fly NPC creation during play. Define what makes a valid NPC for this world — appearance norms, naming conventions, faction affiliations — so spontaneous characters feel coherent.",
+        "jsonType": "string",
+        "example": "\"All NPCs have a name, a visible flaw, and one secret goal.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.prompt",
+        "description": "Current Voyage root prompt block for character profile generation. This is the main instruction string for how the AI should write background and appearance. If `prompt` is omitted, Voyage uses its built-in default; setting it replaces that default, and setting it to a single space disables the default without adding replacement text.",
+        "jsonType": "string",
+        "example": "\"Write a two-part profile (background, appearance) grounded in the World Foundation.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.purpose",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Make the character feel playable, local to the setting, and socially legible at a glance.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put this guidance inside `prompt`; extra string keys are appended for compatibility.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.tone_and_framing",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Ground the profile in hard choices, not destiny. Present flaws as playable hooks.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put tone and framing guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.style_principles",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Direct, sensory language; short-to-medium sentences in third person.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put style guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.structure_paragraph_one",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Paragraph one: social role, recent pressure, and why the character is near the opening location.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put structure guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.structure_paragraph_two",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Paragraph two: visible mannerisms, gear, and one rumor others believe about them.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put structure guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.context_integration",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Reference one local faction, one nearby place, and one current tension from the world background.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put context guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.class_race_fantasy",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Treat class and ancestry as cultural context, not a fixed morality or personality script.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put archetype and fantasy guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.patterns_of_engagement",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Show how the character handles danger, bargaining, loyalty, and retreat.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put engagement-pattern guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.appearance_rules",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Include silhouette, clothing condition, carried gear, and one memorable sensory detail.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put appearance guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.adversity_guidance",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Give the character a problem they can act on, not a trauma label that defines them.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put adversity guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.anti_patterns",
+        "description": "Preserve-only extra named block from an older/experimental character-background prompt shape. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"No real-world brands. No tragic orphan cliches unless the world explicitly rewards them.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Preserve-only background prompt block. Current worlds put negative prompt guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.custom",
+        "description": "Current catch-all for world-specific background instructions appended after `prompt`. Use this for additions that should not replace the main character profile prompt.",
+        "jsonType": "string",
+        "example": "\"Make the character feel playable, local to the setting, and socially legible at a glance.\\nUse direct, sensory language with short-to-medium sentences in third person.\\nBackground only: tie formative beats to expeditions, guild life, or frontier risk.\\nAppearance only: focus on silhouette, gear wear, and one vivid behavioral tell.\\nWeight traits and skills heavily; fold in at most one lore card when it truly fits.\\nAvoid real-world brands and tragic orphan cliches unless th…",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.character_profile_generator",
+        "description": "Legacy pre-rename root block. Replaced by `prompt`. Still preserved on import for older worlds.",
+        "jsonType": "string",
+        "example": "\"Generate a compact playable profile with Background and Appearance headings.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename generator block. Current worlds use `prompt` as the root character profile instruction.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.character_profile_background",
+        "description": "Legacy pre-rename background block. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"2 paragraphs. No tragic orphan backstories.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename background block. Current worlds put background guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.character_profile_appearance",
+        "description": "Legacy pre-rename appearance block. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Lean on worn gear, posture, and local materials; avoid camera-shot language.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename appearance block. Current worlds put appearance guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.style",
+        "description": "Legacy pre-rename key. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Plainspoken, grounded, specific. Avoid heroic prophecy language.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename style key. Current worlds put style guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.structure",
+        "description": "Legacy pre-rename key. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Two paragraphs: background first, appearance second.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename structure key. Current worlds put structure guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.context",
+        "description": "Legacy pre-rename key. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Tie the character to the current region, a named faction, and one local rumor.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename context key. Current worlds put context guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.do_not_include",
+        "description": "Legacy pre-rename negative prompt block. Fold this guidance into `prompt` for new authoring.",
+        "jsonType": "string",
+        "example": "\"No references to Earth geography. Avoid chosen-one tropes.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename negative prompt key. Current worlds put negative guidance inside `prompt`.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateCharacterBackground.final_notes",
+        "description": "Legacy pre-rename catch-all. Fold this guidance into `prompt` or `custom` for new authoring.",
+        "jsonType": "string",
+        "example": "\"Leave one unresolved question the player can pursue during the first session.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": [],
+        "legacy": true,
+        "supersededBy": "aiInstructions.generateCharacterBackground.prompt",
+        "legacyReason": "Pre-rename catch-all. Current worlds put final guidance inside `prompt`; use `custom` for additional world-specific appended notes.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "aiInstructions.generateNPCDetails.custom",
+        "description": "Guides how the AI fleshes out NPC presentation when a character is examined or first encountered in depth — knowledge boundaries, what they volunteer vs. withhold, and how personality manifests in description.",
+        "jsonType": "string",
+        "example": "\"Reveal only what observation plausibly shows; hold secrets for earned moments.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateLocationDetails.custom",
+        "description": "Extra location flavor injected when a place is closely examined or entered for the first time. Define what sensory details to emphasize, what the AI should infer from detailType, and how to handle transition narration.",
+        "jsonType": "string",
+        "example": "\"Emphasise smell and sound before visual detail.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateRegionDetails.custom",
+        "description": "Regional-scale narration guidance: travel blurbs, macro geography flavor, how the region's tone differs from the global world background, and what historical or political context the AI may surface.",
+        "jsonType": "string",
+        "example": "\"Travel blurbs mention roads, patrol density, and biome shifts.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateFactionDetails.custom",
+        "description": "How factions present themselves when they act in scenes — their public face, how rumors about them surface, what politics and secrets the AI may reveal, and how member NPCs reflect faction values.",
+        "jsonType": "string",
+        "example": "\"Show public face first; rumors before classified agendas.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.generateEncounters.custom",
+        "description": "Encounter framing instructions: pacing and stakes tone, how to weight the encounter element lists, when to telegraph vs. surprise the player, and how encounter difficulty should read in prose.",
+        "jsonType": "string",
+        "example": "\"Encounters should escalate in three beats: arrival, complication, resolution.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      },
+      {
+        "path": "aiInstructions.ItemGenerationAndUsage.custom",
+        "description": "World-specific guidance for item discovery, generation, economy, acquisition, use, consumption, equipment, transformation, and removal. Voyage appends this to item-update and item-definition prompts so generated inventory behavior matches the world's material culture and rules.",
+        "jsonType": "string",
+        "example": "\"Consumables should be scarce, repairable gear should matter, and generated loot should follow local materials.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "aiInstructions.perString",
+        "label": "AI instructions — each string leaf under a task",
+        "path": "aiInstructions.<task>…",
+        "kind": "field",
+        "maxChars": 5000
+      },
+      {
+        "id": "aiInstructions.perTaskTotal",
+        "label": "AI instructions — total chars per task (all strings combined)",
+        "path": "aiInstructions.<task>",
+        "kind": "section",
+        "maxChars": 20000
+      }
+    ]
+  },
+  {
+    "key": "attributes",
+    "title": "Attributes",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "The concrete attribute records themselves: display names, descriptions, base values, and optional grouping labels used by sheets and generators.",
+    "role": "Supplies the actual stat entries Oracle and the guided editor can create, revise, and reference during system generation.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "attributes.*.name",
+        "description": "The player-facing name of this attribute as shown in sheets, generators, and rolls (e.g. \"Strength\", \"Presence\", \"Tech\"). V33 migration normalizes each attribute entry to the strict shape { name, description, baseValue, category } and synchronizes attributeSettings.attributeNames from these names.",
+        "jsonType": "string",
+        "example": "\"Strength\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "attributes.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "attributes.*.description",
+        "description": "Short explanation of what this attribute measures in play and what kinds of actions it should influence. Keep it concrete enough that generators and validators can tell nearby attributes apart.",
+        "jsonType": "string",
+        "example": "\"Measures raw force, lifting power, and heavy melee pressure.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "attributes.entity.description",
+        "limitIds": []
+      },
+      {
+        "path": "attributes.*.baseValue",
+        "description": "The default starting value for this specific attribute record before character-specific modifiers or point-buy adjustments apply. Use this when different attributes need different baselines.",
+        "jsonType": "number",
+        "example": "10",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "attributes.entity.baseValue",
+        "limitIds": []
+      },
+      {
+        "path": "attributes.*.category",
+        "description": "Optional grouping label for UI and generation (e.g. \"Physical\", \"Mental\", \"Social\", \"Magic\"). Helps the sheet and Oracle cluster related stats without changing their mechanical identity.",
+        "jsonType": "string",
+        "example": "\"Physical\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "attributes.entity.category",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "attributeSettings",
+    "title": "Attribute settings",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Global rules for the stat system: point-buy defaults, low-stat flavor, derived modifiers, and the migrated attributeNames mirror.",
+    "role": "Defines how the attribute layer behaves across character creation, rolls, and downstream mechanics.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "attributeSettings.attributeNames",
+        "description": "The ordered list of core stats for the world (e.g. [\"strength\", \"dexterity\", \"constitution\", \"intelligence\", \"wisdom\", \"charisma\"]). In V33 this mirrors the top-level attributes map after migration; author attribute details in attributes.* and let Forge keep this list synchronized for character creation, skill.attribute, and attributeStatModifiers.",
+        "jsonType": "string[]",
+        "example": "[\"strength\", \"dexterity\", \"constitution\", \"intelligence\", \"wisdom\", \"charisma\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.lowAttributeTraits",
+        "description": "Flavor text keyed by attribute name, shown when a character's score is at or below lowAttributeThreshold. Used in character creation UI and may be injected into NPC descriptions generated from low-stat archetypes.",
+        "jsonType": "Record<string, string>",
+        "example": "{ \"strength\": \"Frail and easily winded.\" }",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.maxStartingAttribute",
+        "description": "The maximum value a player may assign to any single attribute during point-buy character creation. Prevents hyper-specialized starting characters.",
+        "jsonType": "number",
+        "example": "16",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.lowAttributeThreshold",
+        "description": "The score at or below which an attribute is considered \"low\" for the purposes of lowAttributeTraits flavor text.",
+        "jsonType": "number",
+        "example": "8",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.attributeBonusModifier",
+        "description": "Converts raw attribute scores into check bonuses (e.g. a modifier of 0.5 turns a score of 14 into a +7 bonus). Adjust to calibrate how much raw stats matter; the resulting success contribution is capped by skillSettings.maxSkillSuccessLevel.",
+        "jsonType": "number",
+        "example": "0.5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.attributeStatModifiers",
+        "description": "A record keyed by attribute name. Each value is a modifier object shaped as { variable: \"health\", amount: 5 }, meaning that attribute grants a derived bonus to another system. Older worlds (e.g. V32) sometimes used numeric string keys (`\"0\"`, `\"1\"`) with an `attribute` field inside each entry — imports preserve that shape; new authoring should use the per-attribute key map.",
+        "jsonType": "object",
+        "example": "{ \"constitution\": { \"variable\": \"health\", \"amount\": 5 } }",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.startingAttributeValue",
+        "description": "The baseline score every attribute begins at before point-buy allocation. Common starting points are 8 or 10.",
+        "jsonType": "number",
+        "example": "8",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "attributeSettings.startingAttributePoints",
+        "description": "The pool of points available for distribution during character creation. Spread across attributeNames according to player preference.",
+        "jsonType": "number",
+        "example": "27",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "authorSeeds",
+    "title": "Author seeds",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Named literary-voice presets (e.g. Brandon Sanderson, Terry Pratchett): each key is a display label, each value is a long multi-line instruction block that steers how characters are portrayed—not randomness seeds.",
+    "role": "Lets you bias character writing toward a house style without pasting the same paragraphs into every AI task.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "authorSeeds.*",
+        "description": "A map of display label to multi-line steering text for defining named authorial voice presets (e.g. \"Hemingway\", \"Gothic Horror\", \"Whimsical Fable\"). Each entry provides detailed guidance on vocabulary, sentence structure, and thematic emphasis that the AI uses to color narration for players who select that preset.",
+        "jsonType": "string",
+        "example": "\"Sparse sentences. Favor concrete nouns and friction over exposition. In combat, sound design matters as much as injury.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "authorSeeds.Literary voice preset",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "characterArchetypes",
+    "title": "Character archetypes",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Keyed archetypes (Survivor, Boss, Believer, …): each value is structured prompt text with Drives, Traits, Morality, and Relationships sections the model uses when sampling or explaining characters.",
+    "role": "Gives generators a consistent personality scaffold beyond raw traits and skills.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "characterArchetypes.*",
+        "description": "A map of archetype name to a structured prompt block containing Drives, Traits, Morality, and Relationships sections. These archetypes seed character background generation — selecting \"Survivor\", \"Noble\", or \"Outcast\" pre-populates the AI with appropriate behavioral assumptions and backstory scaffolding.",
+        "jsonType": "string",
+        "example": "\"Drives: stay breathing, protect the team.\\nTraits: pragmatic, risk-aware.\\nMorality: debt-based—owe nothing, take nothing for free.\\nRelationships: distrusts authority, trusts competence.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "characterArchetypes.Survivor",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "combatSettings",
+    "title": "Combat settings",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Baseline XP curves, pacing, or default combat behaviors for your world—not individual moves, but the ruleset envelope.",
+    "role": "Sets expectations for encounter pacing and reward loops.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "combatSettings.minCombatXP",
+        "description": "The floor XP value awarded for completing any combat encounter, regardless of enemy strength. Prevents trivial victories from yielding zero reward.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "combatSettings.baseCombatXP",
+        "description": "The baseline XP before scaling by enemy tier, encounter difficulty, or other modifiers. Serves as the reference point for the XP formula.",
+        "jsonType": "number",
+        "example": "50",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "combatSettings.abilityCooldown",
+        "description": "The default number of turns before an ability resets after use in combat. Individual abilities may override this with their own cooldown value.",
+        "jsonType": "number",
+        "example": "2",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "combatSettings.abilityBonus",
+        "description": "A baseline numeric bonus added to all ability rolls before skill modifiers apply. This participates in the same success contribution cap as skills, attributes, random-roll bonuses, and context modifiers via skillSettings.maxSkillSuccessLevel.",
+        "jsonType": "number",
+        "example": "2",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "combatSettings.npcDailyHealingAmount",
+        "description": "How much health NPCs passively recover between full in-game days. Affects how threatening repeat encounters with the same NPC feel if the player avoids confrontation.",
+        "jsonType": "number",
+        "example": "20",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "combatSettings.damageTypes",
+        "description": "A list of named damage channels used by resistance and immunity rules (e.g. \"piercing\", \"slashing\", \"fire\", \"necrotic\"). NPC types reference these for vulnerabilities, resistances, and immunities.",
+        "jsonType": "string[]",
+        "example": "[\"piercing\", \"slashing\", \"fire\", \"necrotic\", \"radiant\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "configVersion",
+    "title": "Config version",
+    "category": "meta",
+    "categoryLabel": "Version & platform",
+    "summary": "Declares which world-config schema your JSON targets. Voyage and Forge use this to interpret fields and migration behavior.",
+    "role": "Tells the game and tooling which layout of the world document to expect.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "configVersion",
+        "description": "The world config schema version label (e.g. \"V33\"). Must match the schema generation the app was built against. Changing this manually without a migration will break loading.",
+        "jsonType": "string",
+        "example": "\"V33\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "death",
+    "title": "Death & defeat",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "Whether runs are hardcore and what the narrator should say when a character is defeated. Connects to resource systems that mark health pools.",
+    "role": "Defines permadeath policy and the story beat when a character goes down.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "death.permadeath",
+        "description": "If true, reaching zero health ends the run permanently and the world is reset. If false, the AI follows the instructions field to narrate recovery, consequences, and what changes after defeat.",
+        "jsonType": "boolean",
+        "example": "false",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "death._permadeath",
+        "limitIds": []
+      },
+      {
+        "path": "death.instructions",
+        "description": "How the AI handles defeat when permadeath is off. Specify resurrection cost, narrative framing (captured, unconscious, divine intervention), what the player loses, and how the world acknowledges the near-death.",
+        "jsonType": "string",
+        "example": "\"Player wakes in a temple, stripped of half their gold.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": ["death.instructions"]
+      }
+    ],
+    "limits": [
+      {
+        "id": "death.instructions",
+        "label": "Death — instructions",
+        "path": "death.instructions",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "embeddingDimension",
+    "title": "Embedding dimension",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Optional vector dimension metadata carried by some V33 worlds. Forge preserves it when it already exists, but blank or migrated worlds do not need it forced in.",
+    "role": "Tells downstream semantic tooling how wide stored embedding vectors are when a world explicitly declares that detail.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [
+      {
+        "path": "embeddingDimension",
+        "description": "Optional V33 embedding vector dimension. Preserve it alongside actual embedding metadata; leave absent when the world has no stored embedding IDs or vectors.",
+        "jsonType": "number",
+        "example": "768",
+        "hasDefaultExample": true,
+        "required": false,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "embeddingModel",
+    "title": "Embedding model",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "The model identifier Voyage uses for semantic indexing metadata in V33 worlds. Keep it with real embedding IDs or vectors; omit it when those IDs are removed or absent.",
+    "role": "Declares which embedding provider/model a world expects when semantic retrieval features are in play.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [
+      {
+        "path": "embeddingModel",
+        "description": "V33 embedding provider/model identifier used by Voyage for semantic indexing. Keep it when the world carries real embedding IDs or vectors; omit it when those IDs are removed or absent.",
+        "jsonType": "string",
+        "example": "\"emb-openai-3-small-256\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "embeddings",
+    "title": "Embeddings",
+    "category": "meta",
+    "categoryLabel": "Version & platform",
+    "summary": "Optional vector or embedding payloads used when your pipeline stores semantic data alongside the world. Often empty unless you use advanced tooling.",
+    "role": "Holds machine-readable embedding blobs when your workflow supplies them; not required for typical authoring.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "embeddings.embeddingId",
+        "description": "Maps entity IDs to stored embedding vectors used for semantic memory and retrieval features. In hand-edited worlds this is usually empty — Forge populates it automatically when embedding features are enabled.",
+        "jsonType": "string",
+        "example": "\"emb_abc123\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "encounterElements",
+    "title": "Encounter elements",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Category lists for places, people, and encounter tones—keys like Inhabited Places, Military & Defense, Combat & Danger; values are newline bullet ideas the encounter pipeline can mix.",
+    "role": "Feeds `generateEncounters` and tooling with reusable building blocks rather than one-off strings.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "encounterElements.*",
+        "description": "A dictionary of category labels (e.g. \"Inhabited Places\", \"Military & Defense\", \"Merchants & Traders\", \"Combat & Danger\") to newline-separated bullet lists of place types, people archetypes, or encounter tones. The AI draws from these lists when populating procedural encounters, ensuring random content feels appropriate to the world's flavor rather than generic.",
+        "jsonType": "string",
+        "example": "\"- Travelling spice merchant\n- Fence for stolen goods\n- Wandering healer\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "encounterElements._",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "factions",
+    "title": "Factions",
+    "category": "worldData",
+    "categoryLabel": "World content",
+    "summary": "Organizations, guilds, nations, or crews. Each entry splits player-facing knowledge from narrator-only secrets and declares whether the faction is major or minor.",
+    "role": "Powers political plots, rumors, and encounter tables that need group affiliations.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "factions.*.name",
+        "description": "The faction's display name shown in the UI and referenced in narration. In Voyage exports, the outer keyed-map entry should match this display name exactly.",
+        "jsonType": "string",
+        "example": "\"The Iron Brotherhood\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "factions.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "factions.*.basicInfo",
+        "description": "What players and common rumor-mill knowledge covers about this faction. Injected into prompts when the faction is relevant to a scene — keep it concise and free of secrets that should only appear in hiddenInfo.",
+        "jsonType": "string",
+        "example": "\"A mercenary guild operating throughout the northern provinces.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "factions.entity.basicInfo",
+        "limitIds": ["factions.*.basicInfo"]
+      },
+      {
+        "path": "factions.*.hiddenInfo",
+        "description": "GM-only secrets, internal politics, hidden agendas, and conspiracies. Never surfaces to the player unless the story explicitly calls for a reveal moment.",
+        "jsonType": "string",
+        "example": "\"Funded by a coalition of old-world crowns—some want trophies, others want cures.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "factions.entity.hiddenInfo",
+        "limitIds": ["factions.*.hiddenInfo"]
+      },
+      {
+        "path": "factions.*.factionType",
+        "description": "major or minor. Major factions have broad intel reach and story impact. Minor factions are local or niche — the AI uses this to calibrate how often to reference them in open-world narration.",
+        "jsonType": "\"major\" | \"minor\"",
+        "example": "\"major\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "factions.entity.factionType",
+        "limitIds": []
+      },
+      {
+        "path": "factions.*.detailType",
+        "description": "Runtime/auto faction detail flag. Omit this from authored faction definitions; Voyage sets factions to detailed during initialization.",
+        "jsonType": "\"basic\" | \"detailed\"",
+        "example": "\"detailed\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "factions.entity.detailType",
+        "limitIds": []
+      },
+      {
+        "path": "factions.*.known",
+        "description": "Whether the faction appears in baseline player intel. Set to false for secret societies or groups players must discover through play.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "factions.entity.known",
+        "limitIds": []
+      },
+      {
+        "path": "factions.*.embeddingId",
+        "description": "Runtime/auto embedding reference. Omit this from authored faction definitions; preserve imported values only when maintaining older data.",
+        "jsonType": "string",
+        "example": "\"\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "factions.entity.embeddingId",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "factions.section",
+        "label": "Factions (entire section)",
+        "path": "factions",
+        "kind": "section",
+        "maxChars": 100000
+      },
+      {
+        "id": "factions.*.basicInfo",
+        "label": "Factions — each basicInfo",
+        "path": "factions.*.basicInfo",
+        "kind": "field",
+        "maxChars": 4000
+      },
+      {
+        "id": "factions.*.hiddenInfo",
+        "label": "Factions — each hiddenInfo",
+        "path": "factions.*.hiddenInfo",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "heroesVersion",
+    "title": "Heroes version",
+    "category": "meta",
+    "categoryLabel": "Version & platform",
+    "summary": "Pairs with the config version for Heroes-era world features. It should match the ecosystem your world was built for.",
+    "role": "Signals feature level for hero- and progression-related systems tied to world data.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "heroesVersion",
+        "description": "An integer schema generation version that pairs with configVersion. Forge uses this to decide whether an import needs compatibility shims applied before it can be edited.",
+        "jsonType": "number",
+        "example": "33",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "info",
+    "title": "World info",
+    "category": "meta",
+    "categoryLabel": "Version & platform",
+    "summary": "Auxiliary metadata about the world document itself—titles, author notes, or packaging hints depending on your toolchain.",
+    "role": "Carries non-gameplay document metadata separate from in-fiction content.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "items",
+    "title": "Items",
+    "category": "worldData",
+    "categoryLabel": "World content",
+    "summary": "Catalog of gear, consumables, and loot. Descriptions feed both player tooltips and AI narration when items are used or examined.",
+    "role": "Backs inventory, shops, drops, and any story beat that names an object.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "items.*.name",
+        "description": "The item's player-facing name. In Voyage exports, the outer keyed-map entry should match this display name exactly.",
+        "jsonType": "string",
+        "example": "\"Rusted Longsword\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "items.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "items.*.category",
+        "description": "The item type used by loot tables, shop inventories, and itemSettings.itemCategories filtering (e.g. \"Weapon\", \"Armor\", \"Consumable\", \"Accessory\").",
+        "jsonType": "string",
+        "example": "\"Weapon\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "items.entity.category",
+        "limitIds": []
+      },
+      {
+        "path": "items.*.slot",
+        "description": "Optional equipment slot this item occupies when equipped (e.g. \"body\", \"main hand\", \"quick slot\"). When present, it should match one of the slot strings defined in itemSettings.itemSlots.",
+        "jsonType": "string",
+        "example": "\"main hand\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "items.entity.slot",
+        "limitIds": []
+      },
+      {
+        "path": "items.*.description",
+        "description": "The player-facing tooltip text shown in the inventory and shop UI. Should cover what the item does and any notable effects in plain language.",
+        "jsonType": "string",
+        "example": "\"Heavy ore blade. Greatsword stance rewards charge timing against thick hide.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "items.entity.description",
+        "limitIds": ["items.*.description"]
+      },
+      {
+        "path": "items.*.bonuses",
+        "description": "Structured stat bonuses applied while the item is equipped — attribute boosts, skill modifiers, resource pool increases. Skill, attribute, stat, and random-roll style bonuses share the maxSkillSuccessLevel success cap.",
+        "jsonType": "object[]",
+        "example": "[{ \"type\": \"attribute\", \"variable\": \"strength\", \"value\": 1 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "items.entity.bonuses",
+        "limitIds": []
+      },
+      {
+        "path": "items.*.mediaContent",
+        "description": "Optional readable text stored on the item, such as a book chapter, sign inscription, letter, or scroll body.",
+        "jsonType": "string",
+        "example": "\"Chapter I: The sea remembers every oath.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "items.entity.mediaContent",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "items.section",
+        "label": "Items (entire section)",
+        "path": "items",
+        "kind": "section",
+        "maxChars": 100000
+      },
+      {
+        "id": "items.*.description",
+        "label": "Items — each description",
+        "path": "items.*.description",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "itemSettings",
+    "title": "Item settings",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Economy-wide knobs: currency naming, default categories, or global item behavior flags depending on your template.",
+    "role": "Tunes how itemization behaves across the whole save.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "itemSettings.currencyName",
+        "description": "The display string for the world's primary currency (e.g. \"gold\", \"credits\", \"marks\", \"void shards\"). Appears in shop UI, loot narration, and economy-related prompts.",
+        "jsonType": "string",
+        "example": "\"gold\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "itemSettings.itemSlots",
+        "description": "An array of { slot, category, quantity } objects defining the equipment loadout structure. Each row is an equipment slot (e.g. \"head\", \"body\", \"main hand\", \"quick slot 1-3\", \"accessory 1-2\"). Quantity allows stacking for slots that hold multiple items.",
+        "jsonType": "{ slot: string, category: string, quantity: number }[]",
+        "example": "[{ \"slot\": \"main hand\", \"category\": \"Weapon\", \"quantity\": 1 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "itemSettings.itemCategories",
+        "description": "A whitelist of valid item categories for loot tables and shops. Only items matching a listed category will appear in procedurally generated inventories. Common values: Currency, Armor, Weapon, Consumable, Accessory, Misc.",
+        "jsonType": "string[]",
+        "example": "[\"Weapon\", \"Armor\", \"Consumable\", \"Accessory\", \"Currency\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "itemSettings.startingItems",
+        "description": "Default items granted to all new characters at creation, before trait or skill bonuses apply. Each entry is { item, quantity }. Use for universal starting gear (torches, a basic weapon, rations).",
+        "jsonType": "{ item: string, quantity: number }[]",
+        "example": "[{ \"item\": \"torch\", \"quantity\": 3 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "itemSettings.section",
+        "label": "Item settings (entire section)",
+        "path": "itemSettings",
+        "kind": "section",
+        "maxChars": 5000
+      }
+    ]
+  },
+  {
+    "key": "locationArchetypes",
+    "title": "Location archetypes",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Place-tone presets (Web of Corruption, Power Struggle, Sanctuary, …): each entry describes atmosphere, tensions, patterns, and secrets in a structured way for location generation and detail passes.",
+    "role": "Keeps settlements and dungeons thematically coherent when the model elaborates a site.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "locationArchetypes.*",
+        "description": "A map of place tone or theme to a structured prompt block covering Atmosphere, Tension, Recurring Patterns, and Hidden Secrets. Used by location detail generators to give procedurally or hand-described places a consistent dramatic identity beyond their physical description.",
+        "jsonType": "string",
+        "example": "\"Atmosphere: humid, conspiratorial whispers.\\nTension: everyone owes someone.\\nPatterns: closed doors, coded signs.\\nSecrets: the guild ledger names buyers of banned trophies.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "locationArchetypes.Web of Corruption",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "locations",
+    "title": "Locations",
+    "category": "geography",
+    "categoryLabel": "Map & places",
+    "summary": "Points of interest on the map: coordinates, region ties, public versus hidden blurbs, and nested areas for sub-locations or rooms.",
+    "role": "Anchors exploration, travel narration, and triggers that fire when entering a place.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "locations.*.name",
+        "description": "The location's display name as used across quests, NPC currentLocation fields, and travel references. In Voyage exports, the outer keyed-map entry should match this name exactly.",
+        "jsonType": "string",
+        "example": "\"Ashveil Ruins\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.basicInfo",
+        "description": "A player-facing summary of the location: what it looks like, its general atmosphere, and what a traveler arriving for the first time would notice.",
+        "jsonType": "string",
+        "example": "\"A crumbling keep overtaken by thornvines and shadow-crows.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.basicInfo",
+        "limitIds": ["locations.*.basicInfo"]
+      },
+      {
+        "path": "locations.*.hiddenInfo",
+        "description": "GM-only secrets about this location — hidden passages, buried history, faction activity that hasn't been revealed to players yet.",
+        "jsonType": "string",
+        "example": "\"Supply barges and airlift cables tie the cliff tiers together—noise hides a lot of sins.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.hiddenInfo",
+        "limitIds": ["locations.*.hiddenInfo"]
+      },
+      {
+        "path": "locations.*.region",
+        "description": "The region name string that contains this location. Drives travel narration, encounter tables, and atlas grouping.",
+        "jsonType": "string",
+        "example": "\"blighted_moor\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.region",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.x",
+        "description": "Map coordinate X used for placement on the world map.",
+        "jsonType": "number",
+        "example": "42",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.x",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.y",
+        "description": "Map coordinate Y used for placement on the world map.",
+        "jsonType": "number",
+        "example": "17",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.y",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.radius",
+        "description": "The numeric footprint preset behind the creator-facing Small, Medium, and Large size controls. Store the matching number from the locationSettings-derived presets rather than the display label.",
+        "jsonType": "number",
+        "example": "3",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.radius",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.known",
+        "description": "Whether this location appears on the player's atlas from the start. Set to false for hidden or undiscovered places.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.known",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.detailType",
+        "description": "Voyage's structural depth flag for the location: `basic` or `detailed`. Use `detailed` when the place is heavily pre-authored and should retain stronger authored specificity; use `basic` for lighter anchors where the AI can fill more gaps.",
+        "jsonType": "\"basic\" | \"detailed\"",
+        "example": "\"detailed\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.detailType",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.complexityType",
+        "description": "The layout shape of an authored location: use `simple` for single-point anchors and `complex` for places with richer internal area graphs. The live codec also accepts `wilderness` for imported/runtime data, but creators usually should not author wilderness as a location because open travel space is implied between defined locations.",
+        "jsonType": "\"simple\" | \"complex\" | \"wilderness\"",
+        "example": "\"complex\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "locations.entity.complexityType",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.visualTags",
+        "description": "Art and narration tags used to influence generated imagery and description style (e.g. \"ruined\", \"fog-covered\", \"underground\", \"flooded\").",
+        "jsonType": "string[]",
+        "example": "[\"ruined\", \"fog-covered\", \"underground\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.visualTags",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.imageUrl",
+        "description": "Optional URL for the location's image.",
+        "jsonType": "string",
+        "example": "\"https://cdn.example.com/locations/ashveil.png\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.imageUrl",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.factions",
+        "description": "Faction IDs with an active presence at this location — patrols, occupants, or political control. Influences NPC allegiances and dialogue generated here.",
+        "jsonType": "string[]",
+        "example": "[\"iron_brotherhood\", \"undead_remnants\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.factions",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.embeddingId",
+        "description": "Optional vector ID for semantic retrieval. Populated automatically when embedding features are active.",
+        "jsonType": "string",
+        "example": "\"\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.embeddingId",
+        "limitIds": []
+      },
+      {
+        "path": "locations.*.areas",
+        "description": "A sub-graph of rooms or sub-locations within this place. Each area has a description and a list of connected area IDs forming the micro-map (e.g. the throne room connects to the guard barracks and the royal garden).",
+        "jsonType": "Record<string, { description: string, paths: string[] }>",
+        "example": "{ \"throne_room\": { \"description\": \"...\", \"paths\": [\"guard_post\", \"royal_garden\"] } }",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "locations.entity.areas",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "locations.section",
+        "label": "Locations (entire section)",
+        "path": "locations",
+        "kind": "section",
+        "maxChars": 1000000
+      },
+      {
+        "id": "locations.*.basicInfo",
+        "label": "Locations — each basicInfo",
+        "path": "locations.*.basicInfo",
+        "kind": "field",
+        "maxChars": 4000
+      },
+      {
+        "id": "locations.*.hiddenInfo",
+        "label": "Locations — each hiddenInfo",
+        "path": "locations.*.hiddenInfo",
+        "kind": "field",
+        "maxChars": 4000
+      },
+      {
+        "id": "locations.*.areas.*.description",
+        "label": "Locations — each area description",
+        "path": "locations.*.areas.*.description",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "locationSettings",
+    "title": "Location settings",
+    "category": "geography",
+    "categoryLabel": "Map & places",
+    "summary": "Global knobs for density: how many locations per region, simple versus complex radius defaults, and similar scaffolding.",
+    "role": "Tunes procedural placement and map scaling defaults.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "locationSettings.regionSize",
+        "description": "The grid unit or abstract span used when packing regions onto the world map. Affects procedural layout spacing.",
+        "jsonType": "number",
+        "example": "100",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.simpleRadius",
+        "description": "Default encounter or roam radius for simple locations (small villages, campsites, roadside shrines). NPCs will not naturally travel beyond this radius from the location center.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.complexRadius",
+        "description": "The larger footprint for complex hub locations (cities, dungeons, fortresses). Determines the exploration area and the density of sub-areas.",
+        "jsonType": "number",
+        "example": "20",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.regionLocationCount",
+        "description": "The target number of locations generated per region when using procedural region expansion. Higher values produce denser, more detailed regions.",
+        "jsonType": "number",
+        "example": "8",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.avgTravelDistance",
+        "description": "The expected distance between points of interest on the world map. Used by travel narration to estimate journey times and encounters.",
+        "jsonType": "number",
+        "example": "15",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.minTravelDistance",
+        "description": "Minimum spacing enforced between adjacent locations during procedural placement. Prevents locations from spawning on top of each other.",
+        "jsonType": "number",
+        "example": "3",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.regionFactionCount",
+        "description": "How many factions are attached to each generated region. Drives faction presence, patrol behavior, and political flavor in that region's encounters.",
+        "jsonType": "number",
+        "example": "2",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.newRegionGenerationEnabled",
+        "description": "When true, Forge may suggest or auto-create new regions as players explore beyond the edges of the defined map. Set to false to keep the world fixed.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "limitIds": []
+      },
+      {
+        "path": "locationSettings.encountersEnabled",
+        "description": "Enables location/region encounter generation systems for worlds that use procedural travel or roaming encounters.",
+        "jsonType": "boolean",
+        "example": "false",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "mapLayers",
+    "title": "Map layers",
+    "category": "geography",
+    "categoryLabel": "Map & places",
+    "summary": "Optional overlays for tactical or strategic maps—terrain classes, fog, territory paint—when your pipeline uses layered map data.",
+    "role": "Feeds visual or mechanical map features above the base graph.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "mechanics",
+    "title": "Mechanics",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Custom mechanics blocks for rules that do not fit standard combat or skill frameworks—house systems, minigames, or narrative currencies.",
+    "role": "Extends the engine with world-specific logic hooks.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "mods",
+    "title": "Mods",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "An array of published mod references attached to the world, typically stored as `{ shortId, version }` objects. Fresh Forge worlds currently default this to an empty array.",
+    "role": "Signals external mod dependencies or companion content without changing the core world shape itself.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "mods",
+        "description": "V33 mod references as an array of objects such as { shortId, version }. Empty array means no published mods are attached.",
+        "jsonType": "object[]",
+        "example": "[]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "nameFilterSettings",
+    "title": "Name filters",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Rules for sanitizing or guiding randomly generated names—tone, banned fragments, or cultural pools.",
+    "role": "Keeps procedurally generated names on-brand.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "nameFilterSettings.*.replacements",
+        "description": "An array of substitute strings for when the outer key (a name fragment to block) is matched in generated content. Used to prevent certain names or words from appearing in AI output by replacing them with acceptable alternatives.",
+        "jsonType": "string[]",
+        "example": "[\"Ashveil\", \"Ironhold\", \"Crow's Reach\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "nameFilterSettings.entity.replacements",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "narratorStyle",
+    "title": "Narrator style",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "High-level prose contract: point of view, tense, diction, and atmosphere. Think of it as the default voice card for the narrator before scene-specific instructions kick in.",
+    "role": "Biases all narration toward a consistent literary style unless a scene overrides it.",
+    "shape": "scalar",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "narratorStyle",
+        "description": "The global prose blueprint applied to all narration. Define point-of-view (second person, third close, omniscient), tense (present vs. past), atmosphere register (gritty, epic, cozy mystery), and any world-specific voice rules. This is the single most impactful field for making prose feel consistent.",
+        "jsonType": "string",
+        "example": "\"Second-person present tense. Gritty noir atmosphere. No purple prose.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": ["narratorStyle"]
+      }
+    ],
+    "limits": [
+      {
+        "id": "narratorStyle",
+        "label": "Narrator style",
+        "path": "narratorStyle",
+        "kind": "field",
+        "maxChars": 2000
+      }
+    ]
+  },
+  {
+    "key": "npcs",
+    "title": "NPCs",
+    "category": "characters",
+    "categoryLabel": "Characters & social",
+    "summary": "Concrete characters in the world: type, tier, public and secret blurbs, personality tags, and optional voice hints for TTS.",
+    "role": "Populates encounters, dialogue, and combatants.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "npcs.*.name",
+        "description": "The NPC's display name. Referenced by quest definitions and party lists. In Voyage exports the outer keyed-map entry should match this name exactly.",
+        "jsonType": "string",
+        "example": "\"Harwick the Pale\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcs.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.type",
+        "description": "The npcTypes name string that defines this NPC's species or creature class (e.g. \"Human\", \"Elf\", \"Dragon\", \"Zombie\").",
+        "jsonType": "string",
+        "example": "\"Human\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcs.entity.type",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.tier",
+        "description": "Combat challenge tier: trivial, weak, average, strong, elite, boss, or mythic. Scales health, damage, and encounter XP.",
+        "jsonType": "\"trivial\" | \"weak\" | \"average\" | \"strong\" | \"elite\" | \"boss\" | \"mythic\"",
+        "example": "\"elite\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.tier",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.basicInfo",
+        "description": "The primary narration-facing NPC summary. Include role, reputation, and any appearance detail you want the AI to describe during play; keep spoilers and secret motives in hiddenInfo instead.",
+        "jsonType": "string",
+        "example": "\"Senior councilor with a clipped voice and immaculate political instincts. Include any appearance detail you want narrated in play.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.basicInfo",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.hiddenInfo",
+        "description": "Secret motives, true identity, hidden alliances, and twist reveals only surfaced through specific story moments.",
+        "jsonType": "string",
+        "example": "\"Tracks show it was driven toward Astera by a larger predator's roost.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.hiddenInfo",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.personality",
+        "description": "Short tags or a brief phrase capturing dialog tone — used by generateNPCIntents and generateNPCDetails to keep the NPC's voice consistent (e.g. \"sarcastic optimist\", \"quiet and calculating\").",
+        "jsonType": "string[]",
+        "example": "[\"calculating\", \"quietly cruel\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.personality",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.visualDescription",
+        "description": "Portrait / avatar generation notes for this NPC. Voyage passes this to the image generator only; it is not shown to players and is not used by the narration model. Put any visual details that should appear in narration or player-facing text into basicInfo.",
+        "jsonType": "string",
+        "example": "\"Tall, silver-haired statesman in formal black and gold, ice-grey eyes, perfectly composed.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.visualDescription",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.abilities",
+        "description": "Ability IDs the NPC can use in combat and social encounters. The AI uses this list to generate tactically appropriate behavior.",
+        "jsonType": "string[]",
+        "example": "[\"Shadow Step\", \"Intimidate\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.abilities",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.vulnerabilities",
+        "description": "NPC-specific weakness tags, usually drawn from combatSettings.damageTypes. These supplement or override broad npcTypes guidance when an individual NPC differs from its type.",
+        "jsonType": "string[]",
+        "example": "[\"fire\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.vulnerabilities",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.resistances",
+        "description": "NPC-specific resistance tags, usually drawn from combatSettings.damageTypes.",
+        "jsonType": "string[]",
+        "example": "[\"cold\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.resistances",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.immunities",
+        "description": "NPC-specific immunity tags or condition tags that should not affect this NPC.",
+        "jsonType": "string[]",
+        "example": "[\"poison\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.immunities",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.needsDetailGeneration",
+        "description": "Optional flag used by generated worlds to mark whether an NPC still needs a richer detail pass. False means the NPC is already authored enough for play.",
+        "jsonType": "boolean",
+        "example": "false",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.needsDetailGeneration",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.currentLocation",
+        "description": "The location name string where this NPC currently resides. Used for initial placement and as the default return point after scenes end.",
+        "jsonType": "string",
+        "example": "\"Ashveil Ruins\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcs.entity.currentLocation",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.currentArea",
+        "description": "The specific area ID within the NPC's currentLocation. Allows precise placement within multi-area locations.",
+        "jsonType": "string",
+        "example": "\"throne_room\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcs.entity.currentArea",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.faction",
+        "description": "The primary faction name string this NPC belongs to. Drives loyalty in combat, dialogue alignment, and what faction knowledge they possess.",
+        "jsonType": "string",
+        "example": "\"Iron Brotherhood\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.faction",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.gender",
+        "description": "Required gender or presentation value stored on this NPC entry. Use `male`, `female`, or `non-binary` for new V33-authored content.",
+        "jsonType": "string",
+        "example": "\"male\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcs.entity.gender",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.known",
+        "description": "Whether this NPC is known to the player and appears in player-facing NPC lists or journal-style surfaces at game start. Set false for hidden identities or people who should be discovered in play.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.known",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.detailType",
+        "description": "Optional NPC authorship depth flag: `basic` lets the AI fill more gaps, while `detailed` tells Voyage to preserve authored NPC specifics more aggressively.",
+        "jsonType": "\"basic\" | \"detailed\"",
+        "example": "\"detailed\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.detailType",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.level",
+        "description": "Optional numeric NPC level for combat and scaling-aware worlds.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.level",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.hpCurrent",
+        "description": "Optional current HP snapshot for authored or imported NPC stat blocks.",
+        "jsonType": "number",
+        "example": "80",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.hpCurrent",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.hpMax",
+        "description": "Optional maximum HP snapshot for authored or imported NPC stat blocks.",
+        "jsonType": "number",
+        "example": "80",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.hpMax",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.currentProblems",
+        "description": "Legacy field removed from the official V33 implementation. Preserve imported Alunaria-style values for compatibility, but do not author new worlds against this field.",
+        "jsonType": "legacy string | object[]",
+        "example": "[]",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "npcs.entity.currentProblems",
+        "limitIds": [],
+        "legacy": true,
+        "legacyReason": "Removed from the official V33 implementation. Preserved on import for legacy Alunaria-style worlds, but current authoring should not create or rely on it.",
+        "legacySince": "V33"
+      },
+      {
+        "path": "npcs.*.portraitUrl",
+        "description": "An optional URL to an art asset for this NPC. Displayed in character sheets and dialogue UI when provided.",
+        "jsonType": "string",
+        "example": "\"https://cdn.example.com/harwick.png\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.portraitUrl",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.embeddingId",
+        "description": "Optional vector ID for semantic retrieval. Populated automatically when embedding features are active.",
+        "jsonType": "string",
+        "example": "\"\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.embeddingId",
+        "limitIds": []
+      },
+      {
+        "path": "npcs.*.voiceTag",
+        "description": "An optional string referencing a TTS or voice catalog entry. Omit when the NPC has no assigned voice.",
+        "jsonType": "string",
+        "example": "\"gravelly_baritone_01\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcs.entity.voiceTag",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "npcs.section",
+        "label": "NPCs (entire section)",
+        "path": "npcs",
+        "kind": "section",
+        "maxChars": 1000000
+      },
+      {
+        "id": "npcs.*",
+        "label": "NPCs — each entry (serialized JSON)",
+        "path": "npcs.*",
+        "kind": "entry",
+        "maxChars": 8000
+      }
+    ]
+  },
+  {
+    "key": "npcTypes",
+    "title": "NPC types",
+    "category": "characters",
+    "categoryLabel": "Characters & social",
+    "summary": "Templates or bestiary entries that individual NPCs reference—behavior patterns, biology, baseline difficulty.",
+    "role": "Lets many NPCs share a common rules footprint while varying story details per instance.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "npcTypes.*.name",
+        "description": "The type ID referenced by npcs.type — the species or creature class label (e.g. \"Human\", \"Skeleton\", \"Dire Wolf\").",
+        "jsonType": "string",
+        "example": "\"Skeleton Warrior\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcTypes.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "npcTypes.*.description",
+        "description": "A baseline behavior summary: how this creature type behaves socially and in combat, what motivates it, and how it perceives the player.",
+        "jsonType": "string",
+        "example": "\"Apex biological entities—large predators and ecosystem titans of the New World.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "npcTypes.entity.description",
+        "limitIds": ["npcTypes.*.description"]
+      },
+      {
+        "path": "npcTypes.*.vulnerabilities",
+        "description": "Damage type tags this creature takes extra damage from (referencing combatSettings.damageTypes). The AI uses these to describe weaknesses and suggest tactics.",
+        "jsonType": "string[]",
+        "example": "[\"radiant\", \"bludgeoning\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcTypes.entity.vulnerabilities",
+        "limitIds": []
+      },
+      {
+        "path": "npcTypes.*.resistances",
+        "description": "Damage type tags that deal reduced damage to this creature type. Informs both tactical narration and loot/weapon recommendations.",
+        "jsonType": "string[]",
+        "example": "[\"piercing\", \"slashing\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcTypes.entity.resistances",
+        "limitIds": []
+      },
+      {
+        "path": "npcTypes.*.immunities",
+        "description": "Damage type tags or effect categories this creature ignores entirely. Used to prevent logically inconsistent narration (e.g. fire damage against a living flame elemental).",
+        "jsonType": "string[]",
+        "example": "[\"poison\", \"fear\", \"exhaustion\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "npcTypes.entity.immunities",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "npcTypes.section",
+        "label": "NPC types (entire section)",
+        "path": "npcTypes",
+        "kind": "section",
+        "maxChars": 500000
+      },
+      {
+        "id": "npcTypes.*.description",
+        "label": "NPC types — each description",
+        "path": "npcTypes.*.description",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "other",
+    "title": "Other",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Escape hatch for experimental or vendor-specific keys your pipeline preserves round-trip. Prefer structured sections when possible.",
+    "role": "Stores data that does not map cleanly to first-class sections yet.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "otherSettings",
+    "title": "Other settings",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Catch-all for level caps, feature toggles, or template-specific knobs that do not have a dedicated top-level home.",
+    "role": "Holds miscellaneous global settings your world template expects.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "otherSettings.startingCharacterLevelUpRequirement",
+        "description": "The total XP required to reach level 2 from level 1. This is the baseline from which all subsequent level thresholds are calculated.",
+        "jsonType": "number",
+        "example": "100",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "otherSettings.extraRequiredXPPerCharacterLevel",
+        "description": "The additional XP cost added to each successive level threshold. Creates an exponential or linear curve depending on the value.",
+        "jsonType": "number",
+        "example": "50",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "otherSettings.maxCharacterLevel",
+        "description": "The hard cap on character progression. Characters cannot level beyond this point regardless of accumulated XP.",
+        "jsonType": "number",
+        "example": "20",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "otherSettings.npcHealthPerLevel",
+        "description": "Per-level HP growth applied to NPCs scaled by their level. Used alongside tier modifiers to produce varied health pools.",
+        "jsonType": "number",
+        "example": "8",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "otherSettings.npcMinHealth",
+        "description": "Floor HP for NPC scaling, ensuring even level 1 enemies have a non-trivial amount of health.",
+        "jsonType": "number",
+        "example": "3",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "partyNPCs",
+    "title": "Party NPCs",
+    "category": "characters",
+    "categoryLabel": "Characters & social",
+    "summary": "Companions or followers that travel with the player by default in a story start—distinct from ambient world NPCs.",
+    "role": "Seeds starting squads and persistent allies.",
+    "shape": "undocumented",
+    "coverage": {
+      "hasSchemaDocs": false,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": false
+    },
+    "fields": [],
+    "limits": []
+  },
+  {
+    "key": "premadeCharacters",
+    "title": "Premade characters",
+    "category": "characters",
+    "categoryLabel": "Characters & social",
+    "summary": "Optional ready-to-play heroes with loadouts and voice preferences where your world offers quick picks at character creation.",
+    "role": "Shortens onboarding for new players in curated worlds.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "premadeCharacters.*.name",
+        "description": "The premade character's display name shown in the character creator. Keep it concise and readable at a glance, since this is the first identifier players see when choosing a starter.",
+        "jsonType": "string",
+        "example": "\"Commission Hunter\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "premadeCharacters.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.gender",
+        "description": "Required gender or presentation value stored on this premade entry. Use `male`, `female`, or `non-binary` for new V33-authored content.",
+        "jsonType": "string",
+        "example": "\"female\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "premadeCharacters.entity.gender",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.description",
+        "description": "Required player-facing summary for this premade in character creation. This is the main pitch for who they are, what fantasy they offer, and why a player might pick them.",
+        "jsonType": "string",
+        "example": "\"A disciplined field hunter with Commission training and a practical streak.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "premadeCharacters.entity.description",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.traits",
+        "description": "Optional starting trait names granted to the player when they choose this premade. Each value should match an entry in the top-level traits collection.",
+        "jsonType": "string[]",
+        "example": "[\"Greatsword\", \"Scout\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.traits",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.attributes",
+        "description": "Optional authored attribute overrides for this premade. Use an object map of attribute name to starting numeric value when the character should begin with a custom stat spread.",
+        "jsonType": "Record<string, number>",
+        "example": "{ \"Strength\": 3, \"Agility\": 2 }",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.attributes",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.backstory",
+        "description": "Optional longer backstory text for this premade. Useful when the short description is not enough and you want extra context preserved for imports, onboarding, or downstream tooling.",
+        "jsonType": "string",
+        "example": "\"Raised in the frontier watchtowers, she learned to track raiders before she could write her name.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.backstory",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.portraitUrl",
+        "description": "Optional URL to the portrait art shown for this premade in the character creator or profile UI.",
+        "jsonType": "string",
+        "example": "\"https://cdn.example.com/premades/commission-hunter.png\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.portraitUrl",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.voiceTag",
+        "description": "Optional Voyage voice catalog tag used when this premade should start with a specific voice profile.",
+        "jsonType": "string",
+        "example": "\"steady_ranger_01\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.voiceTag",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.replacesNpc",
+        "description": "Optional NPC display name this premade should replace when selected. If an NPC named Bob exists and this field is \"Bob\", Voyage deletes Bob from the game state when a player joins with this premade selected, so the player character steps into that authored role instead of duplicating the NPC.",
+        "jsonType": "string",
+        "example": "\"Bob\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.replacesNpc",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.skills",
+        "description": "Optional starting skill names granted to the player when they choose this premade. Each value should match an entry in the top-level skills collection.",
+        "jsonType": "string[]",
+        "example": "[\"Tracking\", \"Survival\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.skills",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.abilities",
+        "description": "Optional starting ability names granted to the player when they choose this premade. Each value should match an entry in the top-level abilities collection.",
+        "jsonType": "string[]",
+        "example": "[\"Rapid Volley\", \"Field Dressing\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.abilities",
+        "limitIds": []
+      },
+      {
+        "path": "premadeCharacters.*.id",
+        "description": "Optional authored preset identifier preserved for imports or external tooling. Forge can function without it, but keeping a stable ID can help migrations or outside references.",
+        "jsonType": "string",
+        "example": "\"commission_hunter\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "premadeCharacters.entity.id",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "quests",
+    "title": "Quests",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Pre-authored quest definitions for curated quest lines. Triggers and story starts can make these world-level quests available during play.",
+    "role": "Defines the authored quest catalog: source, objective, completion condition, location mode, and design guidance used by Voyage.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "quests.*.name",
+        "description": "The quest's player-facing title, shown in the journal UI. In Voyage exports, the outer keyed-map entry should match this name exactly.",
+        "jsonType": "string",
+        "example": "\"Clear the Debt\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.questStatement",
+        "description": "A single hook line or briefing sentence used as a short-form teaser in quest lists and notification prompts.",
+        "jsonType": "string",
+        "example": "\"Morin taps a claw-marked diagram—your route is short, the stakes are not.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.questStatement",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.questSource",
+        "description": "The NPC, location, faction, item, or object that originates the quest.",
+        "jsonType": "string",
+        "example": "\"Astera Research Commission\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.questSource",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.questGiverNPC",
+        "description": "Optional NPC name string when a specific character delivers the quest briefing.",
+        "jsonType": "string",
+        "example": "\"Merchant Aldous\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "quests.entity.questGiverNPC",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.detailType",
+        "description": "Quest spatial mode: `detailed` means the quest points at a pre-authored location via questLocation; `basic` means the quest uses a looser spatialRelationship and lets Voyage generate more of the surrounding space.",
+        "jsonType": "\"basic\" | \"detailed\"",
+        "example": "\"detailed\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.detailType",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.questLocation",
+        "description": "The authored location name string required when detailType is `detailed`.",
+        "jsonType": "string",
+        "example": "\"Astera\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "quests.entity.questLocation",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.spatialRelationship",
+        "description": "The spatial mode required when detailType is `basic`: `existingLocalArea`, `newLocalArea`, `nearbyNewLocation`, `distantNewLocation`, or `existingLocationNewAreas`.",
+        "jsonType": "\"existingLocalArea\" | \"newLocalArea\" | \"nearbyNewLocation\" | \"distantNewLocation\" | \"existingLocationNewAreas\"",
+        "example": "\"existingLocalArea\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "quests.entity.spatialRelationship",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.mainObjective",
+        "description": "The primary win condition written in plain language — what the player must achieve to complete the quest and trigger the resolution.",
+        "jsonType": "string",
+        "example": "\"Recover the stolen manifest from the Iron Brotherhood vault.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.mainObjective",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.completionCondition",
+        "description": "The explicit authored definition of what counts as done. Write the resolved end-state in plain language so the engine has a crisp success target.",
+        "jsonType": "string",
+        "example": "\"The stolen manifest has been recovered and returned to the merchant alive or intact.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "quests.entity.completionCondition",
+        "limitIds": []
+      },
+      {
+        "path": "quests.*.questDesignBrief",
+        "description": "Two to four sentences of author-facing guidance for how NPC, location, and trigger generation should stage this quest. Use this for mission-shape guidance, not player-visible summary text.",
+        "jsonType": "string",
+        "example": "\"Keep the handoff tense and intimate; this should feel like a trust test, not a combat rush.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "quests.entity.questDesignBrief",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "randomNames",
+    "title": "Random names",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Pools of given names under `male` and `female` arrays (and optionally more buckets in other templates)—used when generators need a proper name without hand-picking every NPC.",
+    "role": "Keeps naming culturally varied while staying within lists you approve.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "randomNames.male",
+        "description": "A pool of masculine-coded given names available for procedural NPC name generation. Drawn from when the AI creates new named characters without an explicit name. Make this list large enough to avoid repetition in long campaigns.",
+        "jsonType": "string[]",
+        "example": "[\"Aldric\", \"Caelan\", \"Dorn\", \"Fenwick\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "randomNames.female",
+        "description": "A pool of feminine-coded given names for procedural NPC generation. Same guidance as the male pool — diversity and length prevent characters feeling recycled.",
+        "jsonType": "string[]",
+        "example": "[\"Vesra\", \"Maren\", \"Silla\", \"Ondine\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "realms",
+    "title": "Realms",
+    "category": "geography",
+    "categoryLabel": "Map & places",
+    "summary": "Top-level continents or dimensions—each can carry a broad description that sets tone for everything beneath it.",
+    "role": "Partitions the world for travel logic and high-level lore.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "realms.*.name",
+        "description": "The realm's display name — a named continent, plane, or dimensional pocket that groups regions together.",
+        "jsonType": "string",
+        "example": "\"The Shattered Expanse\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "realms.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "realms.*.basicInfo",
+        "description": "Player-facing prose summary of the realm: its dominant terrain type, cultural character, and how it fits into the world's geography.",
+        "jsonType": "string",
+        "example": "\"Unexplored continent with extreme bioenergy concentrations.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "realms.entity.basicInfo",
+        "limitIds": ["realms.*.basicInfo"]
+      },
+      {
+        "path": "realms.*.known",
+        "description": "Discovery flag for atlas-style UI. Unknown realms are hidden from the player's map until revealed through play.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "realms.entity.known",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "realms.*.basicInfo",
+        "label": "Realms — each basicInfo",
+        "path": "realms.*.basicInfo",
+        "kind": "field",
+        "maxChars": 100000
+      }
+    ]
+  },
+  {
+    "key": "regionArchetypes",
+    "title": "Region archetypes",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Regional story-tone presets (Disputed, Frontier, Sacred Territory, …): geography, dynamics, history, and atmosphere prompts that color travel narration and faction friction across a region.",
+    "role": "Anchors macro-scale storytelling before you place individual `locations` and `regions` entries.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "regionArchetypes.*",
+        "description": "A map of regional tone to a structured prompt block covering Geography, Political Dynamics, Historical Context, and Atmosphere. Provides region generators with dramatic framing beyond terrain — a \"Disputed\" region generates very differently from a \"Peaceful Heartland\" or \"Blighted Wasteland\".",
+        "jsonType": "string",
+        "example": "\"Geography: ridge lines and mud rivers.\\nPolitics: two crowns claim the same supply chain.\\nHistory: old forts repurposed as guild camps.\\nAtmosphere: patrol drums at dusk.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "regionArchetypes.Disputed",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "regions",
+    "title": "Regions",
+    "category": "geography",
+    "categoryLabel": "Map & places",
+    "summary": "Large-scale zones within a realm: climate, politics at a glance, and hooks shared by every location inside the region.",
+    "role": "Groups locations for generators and regional intel.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "regions.*.name",
+        "description": "The region's display name, referenced by locations.region and realm region lists. In Voyage exports, the outer keyed-map entry should match this name exactly.",
+        "jsonType": "string",
+        "example": "\"Blighted Moor\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "regions.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.basicInfo",
+        "description": "Biome character, travel flavor, and the first impression a traveler gets of the region's landscape and atmosphere.",
+        "jsonType": "string",
+        "example": "\"Primordial layer-canopy forest.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "regions.entity.basicInfo",
+        "limitIds": ["regions.*.basicInfo"]
+      },
+      {
+        "path": "regions.*.hiddenInfo",
+        "description": "Optional region secret field. Voyage preserves it, but playable region secrets should usually live on locations or NPCs when they need to affect play.",
+        "jsonType": "string",
+        "example": "\"Older maps mark a nest grid—some symbols have been scratched out.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "regions.entity.hiddenInfo",
+        "limitIds": ["regions.*.hiddenInfo"]
+      },
+      {
+        "path": "regions.*.realm",
+        "description": "The parent realm name string this region belongs to. Used for atlas hierarchy and regional grouping.",
+        "jsonType": "string",
+        "example": "\"Shattered Expanse\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "regions.entity.realm",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.x",
+        "description": "Map anchor coordinate X for the region's center point.",
+        "jsonType": "number",
+        "example": "120",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "regions.entity.x",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.y",
+        "description": "Map anchor coordinate Y for the region's center point.",
+        "jsonType": "number",
+        "example": "85",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "regions.entity.y",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.known",
+        "description": "Atlas visibility flag. Unknown regions are hidden from the player's map until discovered.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "regions.entity.known",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.imageUrl",
+        "description": "Optional URL for the region's map image.",
+        "jsonType": "string",
+        "example": "\"https://cdn.example.com/regions/blighted-moor.png\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "regions.entity.imageUrl",
+        "limitIds": []
+      },
+      {
+        "path": "regions.*.factions",
+        "description": "Optional faction keys with regional presence or influence. Use this for broad faction footprint; use locations.factions for site-specific control or occupancy.",
+        "jsonType": "string[]",
+        "example": "[\"iron_brotherhood\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "regions.entity.factions",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "regions.section",
+        "label": "Regions (entire section)",
+        "path": "regions",
+        "kind": "section",
+        "maxChars": 100000
+      },
+      {
+        "id": "regions.*.basicInfo",
+        "label": "Regions — each basicInfo",
+        "path": "regions.*.basicInfo",
+        "kind": "field",
+        "maxChars": 4000
+      },
+      {
+        "id": "regions.*.hiddenInfo",
+        "label": "Regions — each hiddenInfo",
+        "path": "regions.*.hiddenInfo",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "resourceSettings",
+    "title": "Resources",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Pools like health, stamina, mana, or custom meters: max values, recharge per turn, which pool counts as life for death checks, and usage notes for the AI.",
+    "role": "Controls spend and recovery narration plus defeat detection when a health-like pool hits zero.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "resourceSettings.*.name",
+        "description": "The pool's display name as shown in the character sheet UI (e.g. Health, Stamina, Mana, Sanity). Use the same display string consistently in abilities, bonuses, and triggers that reference the pool.",
+        "jsonType": "string",
+        "example": "\"Health\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.initialValue",
+        "description": "The starting value assigned to new characters when the pool is first created. Does not affect existing characters mid-campaign.",
+        "jsonType": "number",
+        "example": "100",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.initialValue",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.maxValue",
+        "description": "The hard ceiling for this pool. Players and NPCs cannot exceed this value through normal recovery — only temporary effects or modifiers may push past it if your world allows.",
+        "jsonType": "number",
+        "example": "100",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.maxValue",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.rechargeRate",
+        "description": "How much of this pool recovers passively per turn or per tick during active scenes. Set to 0 for pools that only refill through explicit actions or rest.",
+        "jsonType": "number",
+        "example": "0",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.rechargeRate",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.restRechargeMultiplier",
+        "description": "Applied to the pool's maximum when calculating how much is restored during a rest action (e.g. 1.0 = full restore, 0.5 = half restored, 0.0 = rest never refills this pool). Useful for mana systems where sleep only partially restores reserves.",
+        "jsonType": "number",
+        "example": "1.0",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.restRechargeMultiplier",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.color",
+        "description": "Hex color code (#RRGGBB) used to tint this pool's UI bar. Helps players visually distinguish multiple resources at a glance.",
+        "jsonType": "string",
+        "example": "\"#e74c3c\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "resourceSettings.entity.color",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.isHealth",
+        "description": "Marks this pool as the \"health\" resource. When this pool reaches zero, the death handling logic fires. Only one resource should have this flag set.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "resourceSettings.entity.isHealth",
+        "limitIds": []
+      },
+      {
+        "path": "resourceSettings.*.usageInstructions",
+        "description": "Markdown-formatted guidance for the AI narrator on when to spend, restore, or reference this pool during narration. Explain what events trigger loss (taking damage, casting spells, exhaustion), what events trigger gain (healing, rest, consumables), and any edge cases the AI should handle.",
+        "jsonType": "string",
+        "example": "\"Deduct 1d6 HP on any failed Endurance check. Restore 10 HP on rest.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "resourceSettings.entity.usageInstructions",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "skills",
+    "title": "Skills",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Skill lines tied to attributes—combat, magic, utility—and the prose that tells the AI when a check should apply.",
+    "role": "Drives non-ability checks and progression flavor for specialized actions.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "skills.*.name",
+        "description": "The skill's machine ID — typically lowercase (e.g. \"stealth\", \"arcane_lore\", \"two_handed_weapons\"). Referenced by abilities, checks, and character creation.",
+        "jsonType": "string",
+        "example": "\"stealth\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "skills.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "skills.*.type",
+        "description": "One of: combat, magic, or utility. Determines which AI routine applies when this skill is checked and how skill XP rewards are categorized.",
+        "jsonType": "\"combat\" | \"magic\" | \"utility\"",
+        "example": "\"combat\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "skills.entity.type",
+        "limitIds": []
+      },
+      {
+        "path": "skills.*.attribute",
+        "description": "The primary attribute key from attributeSettings.attributeNames that this skill draws from for checks (e.g. \"dexterity\", \"intelligence\"). Drives the stat bonus applied to rolls.",
+        "jsonType": "string",
+        "example": "\"dexterity\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "skills.entity.attribute",
+        "limitIds": []
+      },
+      {
+        "path": "skills.*.description",
+        "description": "What the skill covers in the fiction and what kinds of actions it governs. Used in character creation UI and may be injected into prompts when the skill is being tested.",
+        "jsonType": "string",
+        "example": "\"Mastery of massive blades.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "skills.entity.description",
+        "limitIds": []
+      },
+      {
+        "path": "skills.*.startingItems",
+        "description": "An optional array of { item, quantity } objects granted when a player selects this skill at character creation. Use for starter kits — a thief's tools, a scholar's spellbook, etc.",
+        "jsonType": "{ item: string, quantity: number }[]",
+        "example": "[{ \"item\": \"thieves_tools\", \"quantity\": 1 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "skills.entity._startingItems",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "skillSettings",
+    "title": "Skill settings",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Global caps or defaults for skill progression—maximum ranks, refund rules, or category weights for your world.",
+    "role": "Constrains how far skills advance and how they interact with level-ups.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "skillSettings.maxSkillLevel",
+        "description": "The maximum rank a skill can reach. Skills cannot be trained beyond this ceiling regardless of XP invested.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.maxSkillSuccessLevel",
+        "description": "Maximum success contribution Voyage will apply when resolving checks. The cap now applies consistently across skills, attribute-derived bonuses, abilities, random-roll bonuses, and context modifiers.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.skillXPRewards",
+        "description": "Named XP buckets for skill practice: huge, large, medium, and small. The AI picks from these buckets based on how relevant a skill was to a completed action.",
+        "jsonType": "{ huge: number, large: number, medium: number, small: number }",
+        "example": "{ \"huge\": 100, \"large\": 50, \"medium\": 25, \"small\": 10 }",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.xpFromNewSkill",
+        "description": "A bonus XP grant awarded when a character discovers or unlocks a brand-new skill for the first time. Incentivizes broad skill exploration.",
+        "jsonType": "number",
+        "example": "25",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.trainingCooldown",
+        "description": "The number of turns that must pass between successful skill training attempts on the same skill. Prevents grinding a single skill to max in one session.",
+        "jsonType": "number",
+        "example": "10",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.skillBonusModifier",
+        "description": "A global multiplier applied to skill check bonuses across the board. Increase to make skill investment matter more; decrease to flatten the curve, with the final success contribution still capped by maxSkillSuccessLevel.",
+        "jsonType": "number",
+        "example": "1.0",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.charXPPerSkillLevel",
+        "description": "Character-level XP granted each time a skill levels up. Ties skill practice to overall character progression.",
+        "jsonType": "number",
+        "example": "20",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.baseXPFromSkillUpgrade",
+        "description": "The baseline XP reward for successfully upgrading a skill rank. Modified by skillBonusModifier and per-type tuning.",
+        "jsonType": "number",
+        "example": "30",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.skillTypeDifficultyBonus",
+        "description": "Per-type difficulty tuning for skill checks: \"none\" (non-typed), \"magic\", \"combat\", and \"utility\". Allows magic skills to require a different roll threshold than combat skills.",
+        "jsonType": "{ none: number, magic: number, combat: number, utility: number }",
+        "example": "{ \"none\": 0, \"magic\": 2, \"combat\": 1, \"utility\": 0 }",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.startingXPToLevelUpSkill",
+        "description": "The base amount of XP required to raise a skill from its current rank to the next. Scales with additionalXPRequiredPerSkillLevel for higher ranks.",
+        "jsonType": "number",
+        "example": "50",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.baseChanceToLearnNewSkill",
+        "description": "The base probability (0.0–1.0) that a relevant skill event triggers discovery of a new related skill. Affects how organically characters branch out.",
+        "jsonType": "number",
+        "example": "0.15",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.skillLearningBonusModifier",
+        "description": "A modifier applied to the learning chance while a skill is actively being practiced. Higher values make skill discovery feel more responsive.",
+        "jsonType": "number",
+        "example": "1.2",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "skillSettings.additionalXPRequiredPerSkillLevel",
+        "description": "Extra XP added to the level-up cost for each rank beyond the first. Controls how quickly skill training becomes expensive at higher levels.",
+        "jsonType": "number",
+        "example": "25",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "storySettings",
+    "title": "Story settings",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "Holds the world background string—the primary lore digest the AI sees when grounding facts, plus any story-level knobs your template uses.",
+    "role": "Supplies the canonical short summary of your setting for generation and validation.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "storySettings.worldBackground",
+        "description": "The primary world digest injected into every generator prompt. This is the most character-budget-sensitive field in the schema — keep it dense with essential lore (premise, tone, factions at a glance, rules of the world) and defer flavor to lore cards. Exceeding the documented character limit will cause validation errors.",
+        "jsonType": "string",
+        "example": "\"A dieselpunk city-state ruled by the Merchant Compact...\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": ["storySettings.worldBackground"]
+      },
+      {
+        "path": "storySettings.questGenerationGuidance",
+        "description": "Optional steering appended to procedural or AI-assisted quest generation. Use this to specify quest structure preferences, tone (grimdark vs. heroic), what quest types are common, and any off-limits objectives for this world.",
+        "jsonType": "string",
+        "example": "\"Quests should involve personal stakes, not just monetary reward.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "storySettings.worldBackground",
+        "label": "Story settings — world background",
+        "path": "storySettings.worldBackground",
+        "kind": "field",
+        "maxChars": 5000
+      }
+    ]
+  },
+  {
+    "key": "storyStarts",
+    "title": "Story starts",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "Defines starting scenarios: opening text, default flags, starting locations, and which party or hubs the player begins with.",
+    "role": "Controls how new adventures boot—what the player sees first and which regions or NPCs are in play at minute zero.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "storyStarts.*.name",
+        "description": "The start scenario's title, shown in the scenario selection screen.",
+        "jsonType": "string",
+        "example": "\"The Merchant's Debt\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "storyStarts.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.description",
+        "description": "A player-facing pitch paragraph describing the hook, stakes, and setting of this particular entry point into the world.",
+        "jsonType": "string",
+        "example": "\"Airship drop toward the Ancient Forest canopy—Astera lights below.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "storyStarts.entity.description",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.storyStart",
+        "description": "The full prompt text injected to generate the opening scene. This is typically the most critical text for first impressions — write it as a director's note describing exactly how the first scene unfolds.",
+        "jsonType": "string",
+        "example": "\"Open on the docks at dusk. The player is being chased...\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "storyStarts.entity.storyStart",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.locations",
+        "description": "Location name strings where the intro sequence may begin. The first location in the array is usually the default starting point.",
+        "jsonType": "string[]",
+        "example": "[\"Crow Market Docks\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "storyStarts.entity.locations",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.locationAreas",
+        "description": "Area names or IDs specifying the exact sub-location within the starting location. May use the form Location::Area in some world formats.",
+        "jsonType": "string[]",
+        "example": "[\"warehouse_district\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "storyStarts.entity.locationAreas",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.startingPartyNPCs",
+        "description": "NPC name strings present in the player's party or immediate vicinity at the start of this scenario.",
+        "jsonType": "string[]",
+        "example": "[\"Harwick the Pale\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "storyStarts.entity.startingPartyNPCs",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.startingItems",
+        "description": "An array of { item, quantity } objects granted specifically for this start scenario, in addition to any global or trait-based starting items.",
+        "jsonType": "{ item: string, quantity: number }[]",
+        "example": "[{ \"item\": \"debt_notice\", \"quantity\": 1 }]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "storyStarts.entity.startingItems",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.firstQuest",
+        "description": "Optional AI-facing suggestion for the first quest to generate from this story start. Use it as a concise quest title, objective, or mission premise when you do not want to reference a predefined quest record.",
+        "jsonType": "string",
+        "example": "\"Find the Missing Cartographer\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "storyStarts.entity.firstQuest",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.startingQuests",
+        "description": "Optional array of world-level quest keys from quests that should be available at this story start. Use this for custom predefined quest lines; runtime progress still belongs in save data.",
+        "jsonType": "string[]",
+        "example": "[\"rescue-princess\", \"investigate-ruins\"]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "storyStarts.entity.startingQuests",
+        "limitIds": []
+      },
+      {
+        "path": "storyStarts.*.isDefault",
+        "description": "Marks this story start as the default selection when the player first creates a new game without choosing an explicit scenario.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "storyStarts.entity.isDefault",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "storyStarts.count",
+        "label": "Story starts — number of entries",
+        "path": "storyStarts",
+        "kind": "collection",
+        "maxEntries": 100
+      },
+      {
+        "id": "storyStarts.*",
+        "label": "Story starts — each entry (serialized JSON)",
+        "path": "storyStarts.*",
+        "kind": "entry",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "tipSettings",
+    "title": "Tips",
+    "category": "advanced",
+    "categoryLabel": "Advanced & tooling",
+    "summary": "Contextual hints surfaced in UI: onboarding blurbs, mechanic reminders, or fiction-safe tooltips.",
+    "role": "Educates players without embedding tutorials inside story text.",
+    "shape": "settings",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "tipSettings.tips",
+        "description": "An array of short player-facing hint strings shown in a carousel between turns when tipDisplayEnabled is true. Keep tips brief, world-appropriate, and useful for new players.",
+        "jsonType": "string[]",
+        "example": "[\"Explore abandoned buildings for hidden lore.\", \"Factions remember your choices.\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "tipSettings.tipDisplayEnabled",
+        "description": "Master toggle for the tip carousel. Set to false to disable tips entirely for a more immersive experience.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "tipSettings.tipTurnInterval",
+        "description": "The minimum number of turns that must pass between successive tip displays. Prevents tips from feeling spammy in active play.",
+        "jsonType": "number",
+        "example": "5",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "tipSettings.tipMinimumTurns",
+        "description": "The earliest turn number at which a tip may appear. Keeps the very first few turns clean and uninterrupted for story immersion.",
+        "jsonType": "number",
+        "example": "3",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      },
+      {
+        "path": "tipSettings.tipMaximumTurns",
+        "description": "The upper turn limit for tip rotation. After this point tips stop cycling, avoiding late-game players seeing perpetually repeated beginner advice.",
+        "jsonType": "number",
+        "example": "50",
+        "hasDefaultExample": true,
+        "required": true,
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "traitCategories",
+    "title": "Trait Categories",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Character creation groups players choose from at the start of a playthrough, such as races, classes, talents, or weapon skills.",
+    "role": "Defines which traits appear together and how many selections the player can make from each group.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "traitCategories.*.name",
+        "description": "The trait category name, usually matching the map key. Larion-style examples include \"races\", \"classes\", \"Natural Talents\", and \"Weapon Skills\".",
+        "jsonType": "string",
+        "example": "\"races\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traitCategories.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "traitCategories.*.maxSelections",
+        "description": "The maximum number of traits a player may choose from this group when creating a character or starting a playthrough. Use 1 for exclusive choices like race or class; use higher values for picks like talents.",
+        "jsonType": "number",
+        "example": "1",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traitCategories.entity.maxSelections",
+        "limitIds": []
+      },
+      {
+        "path": "traitCategories.*.traits",
+        "description": "An array of selectable trait names or IDs in this group. Each value should match an entry in the top-level traits collection, where the detailed description, modifiers, starting items, abilities, and locks live.",
+        "jsonType": "string[]",
+        "example": "[\"Human\", \"Dwarf\", \"Halfling\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traitCategories.entity.traits",
+        "limitIds": []
+      },
+      {
+        "path": "traitCategories.*.description",
+        "description": "Optional editor or legacy note explaining the theme and selection criteria for this trait category.",
+        "jsonType": "string",
+        "example": "\"Pick the weapon style that defines your hunter.\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "traitCategories.entity.description",
+        "limitIds": []
+      },
+      {
+        "path": "traitCategories.*.required",
+        "description": "Extra-codec boolean that forces the player to make a selection in this category during character creation before continuing.",
+        "jsonType": "boolean",
+        "example": "true",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "traitCategories.entity.required",
+        "limitIds": []
+      },
+      {
+        "path": "traitCategories.*.hidden",
+        "description": "Extra-codec boolean that keeps the category out of the visible character creator UI while still allowing it to exist for internal or system-assigned traits.",
+        "jsonType": "boolean",
+        "example": "false",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "traitCategories.entity.hidden",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "traitCategories.section",
+        "label": "Trait categories (entire section)",
+        "path": "traitCategories",
+        "kind": "section",
+        "maxChars": 100000
+      }
+    ]
+  },
+  {
+    "key": "traits",
+    "title": "Traits",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Character traits players pick or earn: descriptors the AI uses for aptitude, flavor, and checks. Often ties into attribute and skill systems.",
+    "role": "Feeds character creation and ongoing narration of aptitudes and drawbacks.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "traits.*.name",
+        "description": "The trait's display name as it appears in character creation and the character sheet.",
+        "jsonType": "string",
+        "example": "\"Iron Stomach\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.description",
+        "description": "What the trait means mechanically and fictionally. Should be clear enough for a player to understand the trade-offs without reading source code.",
+        "jsonType": "string",
+        "example": "\"Dedication to the heaviest blade.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.description",
+        "limitIds": ["traits.*.description"]
+      },
+      {
+        "path": "traits.*.quirk",
+        "description": "A behavioral tell used by the AI when narrating characters with this trait — a speech pattern, a physical habit, or a recurring reactive behavior that grounds the trait in prose.",
+        "jsonType": "string",
+        "example": "\"Always eats before making decisions.\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.quirk",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.skills",
+        "description": "An array of { skill, modifier } objects granting bonus ranks or roll modifiers to specific skills when this trait is active. Positive success contributions above maxSkillSuccessLevel are clamped at runtime.",
+        "jsonType": "{ skill: string, modifier: number }[]",
+        "example": "[{ \"skill\": \"survival\", \"modifier\": 2 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.skills",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.attributes",
+        "description": "An array of { attribute, modifier } adjustments applied to core stats. Positive values boost, negative values penalize; success contributions above maxSkillSuccessLevel are clamped at runtime.",
+        "jsonType": "{ attribute: string, modifier: number }[]",
+        "example": "[{ \"attribute\": \"constitution\", \"modifier\": 1 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.attributes",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.resources",
+        "description": "An array of { resource, modifier } adjustments to pool maximums or starting values for the matched resource.",
+        "jsonType": "{ resource: string, modifier: number }[]",
+        "example": "[{ \"resource\": \"health\", \"modifier\": 10 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.resources",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.startingItems",
+        "description": "An array of { item, quantity } objects granted at character creation when this trait is selected. Used for flavor kits — a noble's signet ring, a criminal's lockpicks.",
+        "jsonType": "{ item: string, quantity: number }[]",
+        "example": "[{ \"item\": \"rations\", \"quantity\": 5 }]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.startingItems",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.abilities",
+        "description": "An array of ability IDs unlocked when this trait is selected. Lets traits gate access to special moves or passive effects.",
+        "jsonType": "string[]",
+        "example": "[\"iron_constitution\", \"quick_recovery\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.abilities",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.unlockedBy",
+        "description": "Trait IDs that must already be selected before this trait becomes available. Used to build trait trees and prerequisite chains.",
+        "jsonType": "string[]",
+        "example": "[\"tough_as_nails\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.unlockedBy",
+        "limitIds": []
+      },
+      {
+        "path": "traits.*.excludedBy",
+        "description": "Trait IDs that are mutually exclusive with this one — selecting one locks out the other. Use for opposed personality traits or weapon style conflicts.",
+        "jsonType": "string[]",
+        "example": "[\"glass_cannon\"]",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "traits.entity.excludedBy",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "traits.*.description",
+        "label": "Traits — each description",
+        "path": "traits.*.description",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  },
+  {
+    "key": "triggers",
+    "title": "Triggers",
+    "category": "mechanics",
+    "categoryLabel": "Rules & systems",
+    "summary": "Event hooks: when conditions pass, scripts can run and then typed effects apply. Semantic conditions consume a different budget than purely mechanical checks—both matter for large worlds.",
+    "role": "Automates story beats, spawns, reactions, and custom world logic without manual DM input each turn.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "triggers.*.name",
+        "description": "A human-readable label for this trigger, used in debugging, tooling, and Forge's trigger editor. Does not affect runtime behavior.",
+        "jsonType": "string",
+        "example": "\"On Death — Spawn Wraith\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "triggers.entity.name",
+        "limitIds": []
+      },
+      {
+        "path": "triggers.*.recurring",
+        "description": "Whether this trigger may fire repeatedly after its conditions pass. False means it should be treated as one-shot state unless a script sets skip = true before effects apply.",
+        "jsonType": "boolean",
+        "example": "false",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "triggers.entity.recurring",
+        "limitIds": []
+      },
+      {
+        "path": "triggers.*.script",
+        "description": "Optional JavaScript that can be used with or without conditions and effects. It runs only after all trigger conditions pass, or immediately for a trigger with no conditions, and before typed effects apply. It can read state with check(...), persist JSON-compatible values on storage, inspect or modify the effects array, set skip = true to suppress effects and avoid consuming non-recurring triggers, mutate the triggers map for the next turn, inspect info, and write to /logs with log(...) or console methods. Scripts run in the state phase unless action/action-text conditions route the trigger to the planning phase.",
+        "jsonType": "string",
+        "example": "\"log('hello from script')\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "triggers.entity.script",
+        "limitIds": []
+      },
+      {
+        "path": "triggers.*.conditions",
+        "description": "Optional when/if clauses that must evaluate to true for this trigger to fire. Buildable condition types are story, action, story-text, action-text, player-level, game-tick, party-realm, party-region, party-location, party-area, known-entity, player-traits, quests-completed, player-resource, read-string, read-number, read-boolean, and read-array. Conditions using story/action semantic queries count against the semantic trigger budget; purely code-side conditions use the mechanical budget. Do not author embeddingId; Voyage generates semantic embeddings.",
+        "jsonType": "object[]",
+        "example": "[{ \"type\": \"quests-completed\", \"operator\": \"contains\", \"value\": \"cull_damaged_jagras\" }]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "triggers.entity._conditions",
+        "limitIds": []
+      },
+      {
+        "path": "triggers.*.effects",
+        "description": "Optional typed payloads dispatched after an optional script runs. Supported effect families are story, quest-init, quest-progress, party-realm, party-region, party-location, party-area, player-resource, player-traits, known-entity, write-string, write-number, write-boolean, and write-array. Scripts can add, replace, or remove entries before they apply; Voyage applies at most five valid effects per trigger.",
+        "jsonType": "object[]",
+        "example": "[{ \"type\": \"story\", \"instruction\": \"The Commission posts the success publicly and releases the reward.\" }]",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "triggers.entity._effects",
+        "limitIds": []
+      },
+      {
+        "path": "triggers.*.limits",
+        "description": "Keep each trigger under the per-entry character budget documented in Size Limits and keep condition/effect lists to five entries each. Large condition trees, long semantic prompts, and compound script-generated effects are the most common cause of validation failures.",
+        "jsonType": "documentation note",
+        "example": "\"Do not add a limits key; keep each trigger under 10000 characters, 5 conditions, and 5 effects.\"",
+        "hasDefaultExample": true,
+        "required": null,
+        "sourceDocPath": "triggers.entity._limits",
+        "limitIds": []
+      }
+    ],
+    "limits": []
+  },
+  {
+    "key": "worldLore",
+    "title": "World lore",
+    "category": "narrative",
+    "categoryLabel": "Narrative & AI",
+    "summary": "Encyclopedia-style entries: cultures, history, factions at a glance, timelines—whatever you want the model to treat as established fact when it retrieves lore.",
+    "role": "Feeds long-form knowledge without stuffing everything into the single world background string.",
+    "shape": "entity-collection",
+    "coverage": {
+      "hasSchemaDocs": true,
+      "hasSectionGuide": true,
+      "presentInDefaultTemplate": true
+    },
+    "fields": [
+      {
+        "path": "worldLore.*.text",
+        "description": "The long-form article body for this lore entry. Subject to its own per-entry character cap (see Size Limits). Write for the AI, not just the player — dense factual content here improves generation consistency.",
+        "jsonType": "string",
+        "example": "\"Three hundred years ago, the twin mage-kings...\"",
+        "hasDefaultExample": true,
+        "required": true,
+        "sourceDocPath": "worldLore.entity.text",
+        "limitIds": ["worldLore.*.text"]
+      },
+      {
+        "path": "worldLore.*.embeddingId",
+        "description": "Optional vector ID for semantic retrieval. Populated automatically when embedding features are active.",
+        "jsonType": "string",
+        "example": "\"\"",
+        "hasDefaultExample": true,
+        "required": false,
+        "sourceDocPath": "worldLore.entity.embeddingId",
+        "limitIds": []
+      }
+    ],
+    "limits": [
+      {
+        "id": "worldLore.section",
+        "label": "World lore (entire section)",
+        "path": "worldLore",
+        "kind": "section",
+        "maxChars": 500000
+      },
+      {
+        "id": "worldLore.*.text",
+        "label": "World lore — each entry text",
+        "path": "worldLore.*.text",
+        "kind": "field",
+        "maxChars": 4000
+      }
+    ]
+  }
+]

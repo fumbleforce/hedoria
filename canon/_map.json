@@ -1,0 +1,58 @@
+{
+  "_doc": "Block-name to canon-file map. Used when merging candidate files into canon. For each top-level block in a candidate file, look up its destination here. Some blocks (npcTypes, worldLore) appear in two canon files — see _split for the rule that decides which one a new entry goes to.",
+
+  "abilities":           "abilities.json",
+  "aiInstructions":      "ai_instructions.json",
+  "characterArchetypes": "archetypes.json",
+  "encounterElements":   "archetypes.json",
+  "locationArchetypes":  "archetypes.json",
+  "regionArchetypes":    "archetypes.json",
+  "premadeCharacters":   "characters.json",
+  "death":               "death.json",
+  "factions":            "factions.json",
+  "items":               "items.json",
+  "locations":           "locations.json",
+  "authorSeeds":         "misc.json",
+  "nameFilterSettings":  "names.json",
+  "randomNames":         "names.json",
+  "narratorStyle":       "narrator.json",
+  "npcs":                "npcs.json",
+  "npcTypes":            "npcTypes.json",
+  "quests":              "quests.json",
+  "realms":              "realms.json",
+  "regions":             "regions.json",
+  "resourceSettings":    "resourceSettings.json",
+  "skills":              "skills.json",
+  "storyStarts":         "storyStarts.json",
+  "traits":              "traits.json",
+  "traitCategories":     "traits.json",
+  "triggers":            "triggers.json",
+  "worldLore":           "worldLore.json",
+  "configVersion":       "version.json",
+  "embeddingDimension":  "version.json",
+  "embeddingModel":      "version.json",
+  "embeddings":          "version.json",
+  "heroesVersion":       "version.json",
+  "mods":                "version.json",
+  "attributeSettings":   "settings.json",
+  "combatSettings":      "settings.json",
+  "itemSettings":        "settings.json",
+  "locationSettings":    "settings.json",
+  "otherSettings":       "settings.json",
+  "skillSettings":       "settings.json",
+  "storySettings":       "settings.json",
+  "tipSettings":         "settings.json",
+
+  "_split": {
+    "npcTypes": {
+      "default":  "npcTypes.json",
+      "bestiary": "bestiary.json",
+      "rule": "Race/profession types (humans, hofnar, draklid, vorok, etc.) go to npcTypes.json. Creature/beast/troll/demonic-remnant/magical-beast/greater-monster types go to bestiary.json."
+    },
+    "worldLore": {
+      "default":  "worldLore.json",
+      "bestiary": "bestiary.json",
+      "rule": "General world lore goes to worldLore.json. Creature lore (descriptive prose for bestiary entries) goes to bestiary.json."
+    }
+  }
+}
