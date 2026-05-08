@@ -1,0 +1,807 @@
+{
+  "resourceSettings": {
+    "stamina": {
+      "name": "stamina",
+      "canCost": true,
+      "initialValue": 30,
+      "maxValue": 30,
+      "rechargeRate": 2,
+      "replenishOnLongRest": true,
+      "restRechargeMultiplier": 1,
+      "color": "#52DB48",
+      "isHealth": false,
+      "gainPerLevel": 5,
+      "usageInstructions": "### Stamina\n\nThe physical resource for nearly every character in Hedoria. Drained by combat, athletics, hard travel, and any sustained physical effort. Recharges per turn and replenishes on rest.\n\n- Walking, talking, casual movement: 0\n- Single combat strike, leap, sprint: -3 to -5\n- Sustained engagement, long climb, hard ride: -5 to -10\n- Pushing past collapse: -10+\n\nFighters, mercenaries, hunters, scouts, and the great mass of non-casters spend stamina on the things mana-users would spend mana on. A wizard or witch also spends stamina for physical actions; mana is for the working itself."
+    },
+    "mana": {
+      "name": "mana",
+      "canCost": true,
+      "initialValue": 50,
+      "maxValue": 100,
+      "rechargeRate": 5,
+      "replenishOnLongRest": true,
+      "restRechargeMultiplier": 2,
+      "color": "#3b82f6",
+      "isHealth": false,
+      "gainPerLevel": 5,
+      "usageInstructions": "### Mana (the wizard's reservoir)\n\nThe small, steady reservoir produced by a wizard's body. Generated only by male human wizards trained at the High Forum of Telinor or by a hedge-wizard with the spark. Other characters do not generate mana and should not have this resource.\n\nA wizard's mana recovers from rest overnight. The cap is small compared to a witch's reservoir, but the steady output is reliable across a long fight.\n\nMana fuels staff-work — strikes driven through plate, walls held against a charge, wind called to slow a volley, blades stopped mid-arc, hardening, warding, motion. It does not fuel projection (no fireballs, no lightning); the body of the practice forbids it. A wizard who tries to throw fire fails the roll.\n\nA wizard can transfer mana into a willing witch's reservoir through the cooperative practice — the original tradition the Brotherhood was built to refuse. Avenor preserves it openly through the Queen's College consort-line system."
+    },
+    "reservoir": {
+      "name": "reservoir",
+      "canCost": true,
+      "initialValue": 30,
+      "maxValue": 200,
+      "rechargeRate": 0,
+      "replenishOnLongRest": false,
+      "restRechargeMultiplier": 0,
+      "color": "#ec4899",
+      "isHealth": false,
+      "gainPerLevel": 10,
+      "usageInstructions": "### Reservoir (the witch's stored mana)\n\nThe witch's stored magical power. Larger by far than any wizard's pool — a full reservoir lets a trained witch outmatch a circle of brothers — but it does not regenerate from rest. A depleted witch must fill before working again.\n\nAvailable to any witch trained at the Queen's College or as a hedge-witch. The College trains a smaller number of non-human witches — Draklid, Cephalen, Raknid, the rare freed Quell — who use the same reservoir model as human women. Other races (Hofnar, Molvar, Vorok, Threshi, Fernwarg) have no witch tradition. Primes do not become witches. Most male humans cannot draw on a witch-sized reservoir at all.\n\n### Filling\n\nThe reservoir does not refill from rest. Mana is gained by ingesting male essence or being ejaculated into, directly from a willing partner or in rare specialist preparations. In Avenor this is openly contractual through the Queen's College consort-line system. Outside Avenor it is hunted, runs through black markets, or is extracted from magical creatures by mana-hunters.\n\n- Cooperative scene with a willing wizard partner: +50 to +120 (a meaningful share of the partner's mana, played as a downtime scene)\n- Mana potion (specialist preparation): +30 to +50\n- Beast-source extraction: variable, depends on the creature drained\n- Forbidden essence-binding (against consent): variable, dark and politically catastrophic if discovered\n\n### Spending\n\n- Trivial workings (witchlight, hedge-craft, small heat or cold): 0 to -5\n- Moderate workings (combat projection, scry, telekinesis, conjured flame): -10 to -25\n- Major workings (battlefield-scale fire or cold, glamour over a crowd, breaking a curse): -40 to -80\n- Reservoir Spend (the boss-fight finisher): -100 or more, often emptying the tank for a single act the world remembers\n\n### Spent\n\nA witch with a low reservoir can do trivial workings only. All other workings: Very Hard minimum. A witch with an empty reservoir is a woman in unusual clothes hoping nobody notices. This is a real and frequent state; witches outside Avenor live with it constantly."
+    }
+  },
+
+  "skills": {
+    "melee": {
+      "name": "melee",
+      "type": "combat",
+      "attribute": "strength",
+      "description": "Fighting in close quarters with any handheld weapon — sword, spear, axe, mace, club, knife, or anything else taken in hand. The skill that gets used when the fight is at arm's length and steel or wood meets armor or flesh. Easy: striking an unarmed civilian. Medium: a competent soldier. Hard: a veteran or skilled duelist. Very hard: legendary fighter, supernatural opponent, or a Prime warden. Used by every fighter, soldier, mercenary, and guard in the world; not used by wizards, who wield the staff under their own skill.",
+      "startingItems": []
+    },
+    "ranged": {
+      "name": "ranged",
+      "type": "combat",
+      "attribute": "dexterity",
+      "description": "Loosing or throwing missiles at a distance — bow, crossbow, sling, javelin, hatchet, knife. The skill that handles the entire family of ranged weapons; choose the kind that fits the moment. Easy: stationary target at short range, no wind. Medium: moving target, line of sight, mild wind. Hard: contested shot, weather, or moving from cover to cover. Very hard: shot through a crowd without hitting allies, or a single arrow that has to count. Used by hunters, archers, scouts, marines.",
+      "startingItems": []
+    },
+    "unarmed": {
+      "name": "unarmed",
+      "type": "combat",
+      "attribute": "strength",
+      "description": "Fighting with the body — fists, kicks, knees, elbows, headbutts, grapples, throws, holds. Also handles natural weapons where the race carries them: Draklid claw, Threshi sickle-blade forearms, Fernwarg bite. Useful when disarmed, when a kill is not the goal, or when the moment is too close for steel.",
+      "startingItems": []
+    },
+    "staff-work": {
+      "name": "staff-work",
+      "type": "combat",
+      "attribute": "intelligence",
+      "description": "The Brotherhood's applied martial magic, channeled through an imbued battlestaff. The skill is body, staff, and working as one practice — the strike, the brace, the warding all at once. Spends mana.\n\nWith the bonded battlestaff in hand, a practitioner can drive a strike through plate that should have stopped it, brace as a wall against a charge that should have broken him, step where the ground will not hold, call wind to slow a volley, stop a blade in mid-arc, harden weapon or skin or armor for a turn. The work is close-range, body-coupled, and integrated with the swing.\n\nThis skill does not project at distance. No fireballs, no lightning bolts, no thrown flame. A wizard who tries this fails the roll. The doctrine is the practice; the practice is the doctrine.\n\nThe battlestaff is part of the skill. In another's hands it is mostly inert. A wizard without his bonded staff still has the body-discipline of the agoge but is sharply diminished — the skill rolls are degraded until he recovers or rebuilds a staff (a process of years).\n\nUsed by Brothers of Telinor and by hedge-wizards working outside the order. The Brotherhood teaches it as 'channeling,' a doctrinal cover story. Internally, it is the staff and the strike.",
+      "startingItems": []
+    },
+    "witchcraft": {
+      "name": "witchcraft",
+      "type": "magic",
+      "attribute": "wisdom",
+      "description": "The witch's projective magic. Spends from the reservoir. A witch with a full reservoir can do things no wizard can match; a witch with an empty reservoir cannot work at all.\n\nThe repertoire is wide and showy in a way wizardry is not. Light at distance, in any color, sustained or flashing. Conjured flame and conjured cold. Telekinesis — lifting weight, hurling weapons, holding doors. Glamour and concealment over self or others. Scrying for distance, intent, hidden things. Quiet workings for births, fevers, locks, contraceptive draughts, the small protective spells a hedge-witch lives on. The same skill covers the cantrip and the boss-fight finisher; the difference is what the witch is willing to spend.\n\nA witch's working takes time and focus when she works alone. Cooperative work with a willing wizard partner is faster and bigger. The Queen's College in Avenor trains the practice openly. Outside Avenor it is hunted; a witch caught working publicly will be arrested, tried, exiled, or quietly killed. The Queen's College trains a smaller cohort of non-human witches — mostly Draklid, Cephalen, Raknid, the rare freed Quell — who use the same reservoir model. Other races have no witch tradition. Primes do not become witches.",
+      "startingItems": []
+    },
+    "ancestor-work": {
+      "name": "ancestor-work",
+      "type": "magic",
+      "attribute": "wisdom",
+      "description": "The Prime monastic magic — slow, exact conversation with named ancestors, conducted through bone-relics worn at throat, chest, wrists, and belt. Each invocation is a specific dead person doing a specific thing.\n\nDoes not spend a mana resource. Each portable relic is its own item, with its own ancestor and its own charges. A Prime carries three or four relics on the road and works through whichever fits the moment — a Healer-line, a True-Namer-line, a Bone-Reader-line, the rare warrior-line. At a monastery with full vault access, the practice opens far wider; on the road, it is what the Prime brought.\n\nExcellent at knowledge, healing, divination, true-naming, untangling curses, and long-time work. Useless for battle-magic — there is no Prime fireball, no Prime lightning. A Prime mage in a fight is slow, considered, and works through what the relics can do.\n\nBlack-market grave-robbing of Prime bones exists; the magic does not work for thieves, and the families involved suffer untraceable misfortunes across generations.",
+      "startingItems": []
+    },
+    "craft": {
+      "name": "craft",
+      "type": "utility",
+      "attribute": "intelligence",
+      "description": "Making and repairing the made things of the world — smithing, carpentry, weaving, leatherwork, masonry, brewing, cooking, instrument-making, bonesetting, herbalism, mana-potion brewing where the practitioner has the knowledge. One skill rather than twelve, because the same patient hands and eye for material run across most trades. The specifics live in description: a smith works iron, a weaver works wool, a healer works herbs and bone. Easier in a proper workshop with good tools; harder with improvised materials.",
+      "startingItems": []
+    },
+
+    "acrobatics": {
+      "name": "acrobatics",
+      "type": "utility",
+      "attribute": "dexterity",
+      "description": "Tumbling, balance, and quick recovery from a fall or a bad position. Perform tricks on a stage, drop into a chamber through a window, regain footing on an unstable surface, slip a grasp, roll under a swung blade.",
+      "startingItems": []
+    },
+    "athletics": {
+      "name": "athletics",
+      "type": "utility",
+      "attribute": "strength",
+      "description": "Running, jumping, climbing, swimming, hauling, holding ground. The whole-body physical skill that handles every demand of moving the body or moving things with the body. Spends stamina for sustained effort.",
+      "startingItems": []
+    },
+    "investigation": {
+      "name": "investigation",
+      "type": "utility",
+      "attribute": "intelligence",
+      "description": "Patient examination of a place, a person, or a problem. Find clues, read tracks, follow a thread of conversation back to its source, spot the discrepancy in a story, follow ledgers, read body-flicker on a Cephalen, find the herbal traces of a hidden hedge-witch's practice, work out where a thing has been hidden.",
+      "startingItems": []
+    },
+    "survival": {
+      "name": "survival",
+      "type": "utility",
+      "attribute": "constitution",
+      "description": "Living off the land — finding food and water, building shelter, making fire, reading weather, judging trail, handling the cold of the Hinderance or the dry of the Plateau. Includes basic plantcraft and the field knowledge a hunter or scout carries. Molvar root-speech is layered on this skill; Vorok stone-sense too.",
+      "startingItems": []
+    },
+
+    "persuasion": {
+      "name": "persuasion",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Moving people through speech and bearing — argument, reason, charm, flattery, the slow build of a contract negotiation, the bartered favor at a tavern table. Easy where the request aligns with what the target already wants. Hard where it conflicts with their loyalties. Impossible where it asks them to abandon core identity.",
+      "startingItems": []
+    },
+    "intimidation": {
+      "name": "intimidation",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Using fear, presence, or the implied threat of force to bend an outcome. The drawn weapon that doesn't have to be used, the stare that backs a bandit down, the quiet sentence in a noble's hall that lands harder than a shout. Draklid stillness, Vorok grinding voice, and Fernwarg display are all native modes of this skill.",
+      "startingItems": []
+    },
+    "performance": {
+      "name": "performance",
+      "type": "utility",
+      "attribute": "charisma",
+      "description": "Holding a room — song, dance, story, instrument, formal ceremony, a sermon at the Hand-shrine, the recital of an ancestor-lineage at a Prime gathering. Useful for coin in a tavern, for diplomacy in a hall, and for the ritual register of any race that takes ceremony seriously.",
+      "startingItems": []
+    }
+  },
+
+  "abilities": {
+    "Standing Wall": {
+      "name": "Standing Wall",
+      "description": "Brace the staff and the body against a charge or a swing, holding ground that should have broken. Stops a cavalry rush at a doorway, anchors a line that wants to fold, shields civilians behind you for the length of the working. Combat use: full block against an incoming melee strike. Civic use: hold a door, brace a falling beam, plant yourself between an ally and harm. Spends mana.",
+      "requirements": [{ "type": "skill", "variable": "staff-work", "amount": 5 }],
+      "bonus": 8,
+      "cooldown": 4
+    },
+    "Wind-Slow": {
+      "name": "Wind-Slow",
+      "description": "Call a thick gust against a volley, a thrown weapon, or an opponent's charge — slowing it enough that the line behind you has time to react. Combat use: blunt incoming missiles. Field use: scatter smoke, turn back a small fire, ease an ally's fall from a height. Spends mana.",
+      "requirements": [{ "type": "skill", "variable": "staff-work", "amount": 8 }],
+      "bonus": 8,
+      "cooldown": 5
+    },
+    "Step Through": {
+      "name": "Step Through",
+      "description": "Move across ground that shouldn't take your weight — bog, scree, ice, the splintered floor over a drop. The working hardens the path under your feet for the duration of the crossing. Combat use: cross broken ground to engage. Travel use: pass a bad patch the rest of the party has to go around. Spends mana.",
+      "requirements": [{ "type": "skill", "variable": "staff-work", "amount": 8 }],
+      "bonus": 6,
+      "cooldown": 5
+    },
+    "Stop the Blade": {
+      "name": "Stop the Blade",
+      "description": "Catch a strike mid-arc — the staff held across the line of a sword or axe, the working hardening the wood and the moment so that what should have killed you stops a hand from your throat. Combat reaction. Spends mana, and can only be done once per turn — overuse and the staff feels the cost too.",
+      "requirements": [{ "type": "skill", "variable": "staff-work", "amount": 12 }],
+      "bonus": 10,
+      "cooldown": 3
+    },
+    "Hardened Strike": {
+      "name": "Hardened Strike",
+      "description": "Drive the staff blow with the full discipline of the working behind it — the wood at the impact point briefly harder than tempered iron, the strike landing with weight the swing alone could not carry. Punches through plate, breaks shields, drops the largest opponents. Spends mana.",
+      "requirements": [{ "type": "skill", "variable": "staff-work", "amount": 10 }],
+      "bonus": 12,
+      "cooldown": 6
+    },
+    "Staff Through Plate": {
+      "name": "Staff Through Plate",
+      "description": "The senior brothers' working. The staff strike at full intent, magical and physical aligned, that drives wood through worn plate and the wearer behind it. Used at the close of a fight against an armored opponent, when the brother is committed and there will not be a second swing. Spends a heavy share of mana.",
+      "requirements": [
+        { "type": "trait", "variable": "Brother of Telinor", "amount": 1 },
+        { "type": "skill", "variable": "staff-work", "amount": 18 }
+      ],
+      "bonus": 18,
+      "cooldown": 12
+    },
+
+    "Hedge-Working": {
+      "name": "Hedge-Working",
+      "description": "The small, broad, low-cost workings that fill a hedge-witch's life. Quiet a fevered child, ease a hard birth, trip a stuck lock, set a small ward over a doorway, calm a sour stomach, draw water from a stone trough that's gone bad. Costs almost nothing from the reservoir. The whole repertoire of a village witch who never trained at the College, and a daily tool for College-trained witches too.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 5 }],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Witchlight": {
+      "name": "Witchlight",
+      "description": "Conjure light at distance — any color, any size, sustained or flashing, held in the air or anchored to an object. Combat use: blind an opponent, mark a target through smoke, signal across a battlefield. Utility use: light a cave, illuminate a search, hold a steady reading lamp without flame. Spends a small portion of the reservoir.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 8 }],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Conjure Cold": {
+      "name": "Conjure Cold",
+      "description": "Pull warmth out of the air or a body or a surface — frost a doorway shut, slow an opponent's limbs, quench a hostile fire, freeze a small body of water enough to cross. Spends meaningful reservoir for combat use, very little for utility use.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 10 }],
+      "bonus": 10,
+      "cooldown": 4
+    },
+    "Conjure Flame": {
+      "name": "Conjure Flame",
+      "description": "Call flame at distance — kindle a fire on dry tinder, set an enemy's cloak burning, drop a sheet of fire across a doorway, ignite a fuse from across a yard. The witch's projection a wizard cannot match. Spends meaningful reservoir.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 10 }],
+      "bonus": 10,
+      "cooldown": 4
+    },
+    "Move Weight": {
+      "name": "Move Weight",
+      "description": "Telekinetic working — lift a fallen beam off an ally, hurl a weapon back at the thrower, drag a closed door open at distance, hold a falling body in the air for a beat. The weight that can be moved scales with the reservoir spent.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 12 }],
+      "bonus": 10,
+      "cooldown": 5
+    },
+    "Pass Unseen": {
+      "name": "Pass Unseen",
+      "description": "Glamour the witch or a small group — not invisibility, but a working that slides attention past you, the gaze of guards finding more interesting things to settle on, the patrol passing within a body's length and looking through. Holds while the witch holds focus and her reservoir lasts.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 12 }],
+      "bonus": 10,
+      "cooldown": 8
+    },
+    "Scry": {
+      "name": "Scry",
+      "description": "Look at distance. Find a person whose name and face you know, read intent on someone you've met, see a place you've stood. Slow, focused, costs reservoir steadily for the duration of the sight. Cannot find someone hidden by another witch's working without overcoming hers.",
+      "requirements": [{ "type": "skill", "variable": "witchcraft", "amount": 15 }],
+      "bonus": 12,
+      "cooldown": 15
+    },
+    "Reservoir Spend": {
+      "name": "Reservoir Spend",
+      "description": "The College's signature — the working a trained witch builds toward when the moment justifies it. Empty most of the reservoir into a single act the world will remember: a wall of cold across a battlefield, a flame that swallows a war-band, a glamour that holds a city's eyes for an hour, a healing that brings someone back from the edge. The witch is spent afterward and will be a woman in unusual clothes hoping nobody notices until she fills again.",
+      "requirements": [
+        { "type": "trait", "variable": "Witch of the College", "amount": 1 },
+        { "type": "skill", "variable": "witchcraft", "amount": 18 }
+      ],
+      "bonus": 25,
+      "cooldown": 60
+    },
+    "Cooperative Filling": {
+      "name": "Cooperative Filling",
+      "description": "The cooperative practice the Brotherhood was built to refuse. With a willing male partner who carries his own mana, the witch fills her reservoir directly through ingestion of his essence or being ejaculated into. A long downtime scene played out as intimacy; mechanically a meaningful refill of reservoir from the partner's mana, more than any potion can match. Avenor-legal and dignified through the Queen's College consort-line system. Doctrinally illegal everywhere else; a witch and a partner caught at it in a human kingdom outside Avenor face arrest and quiet disposal.",
+      "requirements": [{ "type": "trait", "variable": "Witch of the College", "amount": 1 }],
+      "bonus": 0,
+      "cooldown": 0
+    },
+
+    "Ancestor-Call": {
+      "name": "Ancestor-Call",
+      "description": "Address a named ancestor through their relic and ask for their attention on the present matter. The ancestor sees, considers, and offers whatever the lineage has to give — a turn of the work the bones know. Slow, ritual, and inappropriate for combat. Used to open every Prime working of consequence.",
+      "requirements": [{ "type": "trait", "variable": "Primes", "amount": 1 }],
+      "bonus": 6,
+      "cooldown": 8
+    },
+    "Mend by Lineage": {
+      "name": "Mend by Lineage",
+      "description": "Call a healer-ancestor through their relic and conduct a slow restorative working over a wounded ally. Closes wounds the body could not close on its own, draws fever down, knits bone over time. Not battlefield-quick; the working asks the ancestor to do their old craft, and the bones take their pace.",
+      "requirements": [
+        { "type": "trait", "variable": "Primes", "amount": 1 },
+        { "type": "skill", "variable": "ancestor-work", "amount": 8 }
+      ],
+      "bonus": 10,
+      "cooldown": 10
+    },
+    "Bone-Reading": {
+      "name": "Bone-Reading",
+      "description": "Hold the relic, ask the ancestor what they see, and the lineage offers what it has — a true thing about a person in front of you, the past of an object, the standing of a contract, the shape of a curse. Patient, exact, and rarely wrong. Refused if the ancestor disapproves of the asker's intent.",
+      "requirements": [
+        { "type": "trait", "variable": "Primes", "amount": 1 },
+        { "type": "skill", "variable": "ancestor-work", "amount": 10 }
+      ],
+      "bonus": 10,
+      "cooldown": 12
+    },
+    "Untangle Curse": {
+      "name": "Untangle Curse",
+      "description": "The slow Prime work the colleges quietly send their hardest cases to. Find the working laid on a person, place, or object, read its anchor, and unbind it across the time the bones will give to the matter. Hours to days; never quick. Returns more than half of what was taken if the lineage is patient and the relic is right.",
+      "requirements": [
+        { "type": "trait", "variable": "Primes", "amount": 1 },
+        { "type": "skill", "variable": "ancestor-work", "amount": 12 }
+      ],
+      "bonus": 15,
+      "cooldown": 30
+    },
+    "True-Name": {
+      "name": "True-Name",
+      "description": "Speak a creature's true name through the ancestor and bind, banish, or compel it. Effective on demonic remnants of officer-class and below, on ward-bound monsters, and on the lesser things the Wartide left behind. Slow to set up. Catastrophic if the wrong name is spoken.",
+      "requirements": [
+        { "type": "trait", "variable": "Primes", "amount": 1 },
+        { "type": "skill", "variable": "ancestor-work", "amount": 15 }
+      ],
+      "bonus": 18,
+      "cooldown": 30
+    },
+
+    "Trade-Tongue Negotiator": {
+      "name": "Trade-Tongue Negotiator",
+      "description": "The Hofnar practice of running a contract conversation across two languages, three currencies, and four parties without losing the thread. In any negotiation framed as trade, contract, or arbitration, the Hofnar reads the room a beat ahead — every dialect spoken at the table is one she has heard before. Combat use: spot the word that means the other party is about to break the table. Civic use: read a contract for the trap before signing.",
+      "requirements": [{ "type": "trait", "variable": "Hofnar", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Calculating Gaze": {
+      "name": "Calculating Gaze",
+      "description": "The Draklid practice of holding stillness in a way other races find impossible to read. Tail neutral, mandible-set unmoved, slit pupils tracking only what the speaker chose to track. The opponent loses the read on the Draklid's intent, and finds himself volunteering more than he meant to. Useful in negotiation, interrogation, and the long second before a duel.",
+      "requirements": [{ "type": "trait", "variable": "Draklid", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 5
+    },
+    "Tail-Strike": {
+      "name": "Tail-Strike",
+      "description": "The reaction-attack a Draklid keeps in reserve through any close engagement — the long active tail whipping out at the opening the opponent didn't think existed. A free strike off the engagement, light damage but reliably timed. Disrupts a charge, breaks an opponent's swing, sweeps a foot from under a smaller fighter.",
+      "requirements": [{ "type": "trait", "variable": "Draklid", "amount": 1 }],
+      "bonus": 6,
+      "cooldown": 3
+    },
+    "Emotional Projection": {
+      "name": "Emotional Projection",
+      "description": "The Cephalen master's discipline — chromatophores held in deliberate false patterns, projecting calm where there is rage, warmth where there is contempt, friendly slate where the negotiation is already won. Bypasses the ordinary read of emotion that other races rely on. Other Cephalen always see through it; outsiders almost never.",
+      "requirements": [{ "type": "trait", "variable": "Cephalen", "amount": 1 }],
+      "bonus": 10,
+      "cooldown": 5
+    },
+    "Compress": {
+      "name": "Compress",
+      "description": "The Cephalen body squeezes through a gap a third its apparent size — gun-port, hatchway, sewer-grille, prison bars, the crack under a poorly-set door. Combat use: vanish from a hold, reposition through an obstacle. Civic use: get into and out of places no other race can enter at all.",
+      "requirements": [{ "type": "trait", "variable": "Cephalen", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 6
+    },
+    "Plant Whisperer": {
+      "name": "Plant Whisperer",
+      "description": "The Molvar gardener's affinity, going past gardening. Coax a tunnel into shape overnight, persuade a crop to thrive on poor soil, draw root-walls across a passage, ease the meadow above a settlement into bloom or wither. Slow, patient, and devastating in defense of a Molvar's own warren — the meadow turns hostile underfoot, the tunnel collapses around an attacker who took the wrong branching.",
+      "requirements": [{ "type": "trait", "variable": "Molvar", "amount": 1 }],
+      "bonus": 10,
+      "cooldown": 8
+    },
+    "Web-Sense": {
+      "name": "Web-Sense",
+      "description": "The Raknid silken mantle reads vibration and air-flow through fibers most races do not register at all. The bearer notices the approach behind her, the body in the next room, the change in the wind two minutes before it reaches the camp. Combat use: never surprised in close space. Investigation use: track presence through walls, follow movement at night.",
+      "requirements": [{ "type": "trait", "variable": "Raknid", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Pack-Laughter Chorus": {
+      "name": "Pack-Laughter Chorus",
+      "description": "The Fernwarg evening pack-laughter, used in pack and rare in single Fernwarg abroad. A rising chittering chorus that disturbs human listeners at a level beneath conscious hearing — opponents lose discipline, civilians flee, mounts shy. Combat use: morale-break a war-band. Social use: shake an interrogation off-rhythm.",
+      "requirements": [{ "type": "trait", "variable": "Fernwarg", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 8
+    },
+    "Chitinous Glide": {
+      "name": "Chitinous Glide",
+      "description": "The Threshi wing-panel glide, short flights and long downhill drops that close ground a non-flying race cannot match. Cross a river, drop into a granary from the rooftop above, close on a fleeing target across open field. Limited; the Threshi cannot sustain flight. The glide ends when the ground does.",
+      "requirements": [{ "type": "trait", "variable": "Threshi", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 4
+    },
+    "Livestock Endurance": {
+      "name": "Livestock Endurance",
+      "description": "The bred-in stamina of a body lifted from generations of agricultural labor. The Quell carries weight, walks distance, and works through fatigue in ways the other races find quietly remarkable. Combat use: outlast the opponent in a long fight. Travel use: carry the load that breaks a human porter, arrive walking after the rest of the party is on the wagon.",
+      "requirements": [{ "type": "trait", "variable": "Quelled", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Ore-Sense": {
+      "name": "Ore-Sense",
+      "description": "The Vorok's prospector-sense — the body reads stone and metal at a distance, picks up ore-veins through rock, finds water-tables underfoot, judges the soundness of a wall or a ceiling. Combat use: spot the ambush waiting behind worked stone. Operations use: prospect a tunnel, set a charge, judge the hold of a built structure.",
+      "requirements": [{ "type": "trait", "variable": "Vorok", "amount": 1 }],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Adaptive Learning": {
+      "name": "Adaptive Learning",
+      "description": "The human knack for picking up the trick in front of them — the swing the foreign master used, the dialect the trader speaks, the habit of the local guard rotation. Generic-fast in any unfamiliar situation. Used in social, combat, and travel contexts equally; the bonus comes from having paid attention three turns earlier.",
+      "requirements": [{ "type": "trait", "variable": "Human", "amount": 1 }],
+      "bonus": 6,
+      "cooldown": 0
+    },
+
+    "Veteran": {
+      "name": "Veteran",
+      "description": "The unromantic edge a body builds across years of fights. The opponent's tells are familiar, the tempo is familiar, the moment to commit and the moment to disengage are read without conscious thought. Available to any character who has spent enough time in melee or ranged work for the discipline to have stuck.",
+      "requirements": [{ "type": "skill", "variable": "melee", "amount": 12 }],
+      "bonus": 8,
+      "cooldown": 4
+    },
+    "Marches-Reader": {
+      "name": "Marches-Reader",
+      "description": "The Kelmari winter-cycle instinct — read terrain for the ambush, find the line a Threshi raid will take across the same meadow they took last year, judge a slope for footing under a charge. Civic use: assess any tactical landscape. Combat use: pre-position in the right ground before the engagement starts.",
+      "requirements": [{ "type": "skill", "variable": "survival", "amount": 10 }],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Witch-Killer Tracker": {
+      "name": "Witch-Killer Tracker",
+      "description": "The Brotherhood's specialist craft. Find the herbal traces of a hidden hedge-witch's practice, the small social patterns of a witch passing in a village, the quiet shifts in market for the goods a witch buys. Investigation skill applied to the witch-question specifically. Used in the quiet hunts the three kingdoms officially do not discuss.",
+      "requirements": [{ "type": "trait", "variable": "Witch-Killer", "amount": 1 }],
+      "bonus": 10,
+      "cooldown": 0
+    },
+    "Mana-Hunter Track": {
+      "name": "Mana-Hunter Track",
+      "description": "The black-market specialist's trade. Find a magical creature in its range, judge the size of its essence, anticipate where it will move next, set the snare and the working that captures it for extraction. Criminal where it isn't licensed; the high end of the unicorn trade and the cleanest source of black-market potion.",
+      "requirements": [{ "type": "trait", "variable": "Mana-Hunter", "amount": 1 }],
+      "bonus": 10,
+      "cooldown": 0
+    },
+    "Brew Mana Potion": {
+      "name": "Brew Mana Potion",
+      "description": "Refine a captured creature's essence, donor mana, or another source into a potion that fills a witch's reservoir on consumption. Slow, requires a workshop and the right materials. The Avenorian Queen's College does this openly. Outside Avenor it is illegal at every step. The grade of the potion depends on the source — donor-line clean, beast-source moderate, dark-source dangerous and detectable to the College.",
+      "requirements": [
+        { "type": "skill", "variable": "craft", "amount": 10 },
+        { "type": "trait", "variable": "Mana-Hunter", "amount": 1 }
+      ],
+      "bonus": 8,
+      "cooldown": 0
+    },
+    "Extract Essence": {
+      "name": "Extract Essence",
+      "description": "Draw mana from a non-willing source — a captured creature, a bound caster, the rare horror that follows. Refills the witch's reservoir directly without potion or partner. Politically catastrophic if discovered, leaves a signature the College and the Brotherhood can read for years afterward, and is the practice the Quell sorcerer was preparing on the witch queen.",
+      "requirements": [{ "type": "trait", "variable": "Forbidden Working", "amount": 1 }],
+      "bonus": 12,
+      "cooldown": 8
+    },
+    "Bind Essence": {
+      "name": "Bind Essence",
+      "description": "The Quell sorcerer's reach. Bind another caster's working through their essence — corrupt their reservoir, redirect their intent, deny their access to their own power for the duration of the binding. Forbidden, signature-leaving, and the deepest crime in the Avenorian register.",
+      "requirements": [
+        { "type": "trait", "variable": "Forbidden Working", "amount": 1 },
+        { "type": "skill", "variable": "witchcraft", "amount": 15 }
+      ],
+      "bonus": 18,
+      "cooldown": 30
+    },
+    "Apothecary's Touch": {
+      "name": "Apothecary's Touch",
+      "description": "The healer's hand — bleed a fever down, set a bone, draw poison, pack a wound, make a draught. Ordinary practice for any village wisefolk. The same skill covers the contraceptive, the painkiller, and the small protective working a hedge-witch uses interchangeably with ordinary herbs.",
+      "requirements": [{ "type": "skill", "variable": "craft", "amount": 6 }],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Smith's Eye": {
+      "name": "Smith's Eye",
+      "description": "Read a piece of made work — weapon, armor, tool, lock, joint, casting — for its quality, its maker, and its weak point. Estimate price, judge fitness for a fight, find the place a blade will break under load.",
+      "requirements": [{ "type": "skill", "variable": "craft", "amount": 8 }],
+      "bonus": 6,
+      "cooldown": 0
+    },
+    "Hold the Contract": {
+      "name": "Hold the Contract",
+      "description": "The reliability that a Hofnar driver, Draklid retainer, or oath-bound mercenary brings to a job — they do not break the contract during the season under any pressure short of mortal threat to themselves. While engaged in contracted work, the bearer resists persuasion, intimidation, and mundane bribery aimed at making them stop.",
+      "requirements": [{ "type": "skill", "variable": "persuasion", "amount": 8 }],
+      "bonus": 10,
+      "cooldown": 0
+    },
+    "Fern-Hide": {
+      "name": "Fern-Hide",
+      "description": "The Fernwarg coat reads the season and shifts pattern accordingly; in undergrowth, the bearer is invisible standing still. Stealth bonus in any forest, woodland, or fern-country. Outside the right environment the working does nothing.",
+      "requirements": [{ "type": "trait", "variable": "Fernwarg", "amount": 1 }],
+      "bonus": 10,
+      "cooldown": 0
+    }
+  },
+
+  "traits": {
+    "Soldier": {
+      "name": "Soldier",
+      "description": "A drilled fighter of one of the kingdom levies, household guards, town watches, or marches forces. Has stood in a line, held a position, and come out of an engagement at less than full strength more than once. The discipline carries.",
+      "skills": [
+        { "skill": "melee", "modifier": 8 },
+        { "skill": "ranged", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 10 }
+      ],
+      "quirk": "You read tactical ground without consciously meaning to.",
+      "startingItems": [],
+      "abilities": ["Veteran"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Mercenary": {
+      "name": "Mercenary",
+      "description": "A free-company fighter taking contracts wherever the work is. Kit assembled across years of campaigns, loyalties priced by season, the season itself respected — a mercenary who breaks a contract while it runs is not a mercenary anyone hires next year.",
+      "skills": [
+        { "skill": "melee", "modifier": 8 },
+        { "skill": "athletics", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 10 }
+      ],
+      "quirk": "You honor a signed contract through the season. Off-contract, you make your own choices.",
+      "startingItems": [],
+      "abilities": ["Veteran", "Hold the Contract"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Brother of Telinor": {
+      "name": "Brother of Telinor",
+      "description": "A full-trained brother of the High Forum at Telinor. Identified with the spark in boyhood, taken to the agoge at seven or eight, drilled physically and magically for a decade. The dark uniform is shared with every brother in the order. The battlestaff was made for him during training and attuned to him over years; in another's hands it is mostly inert. Forbidden women by doctrine — the cooperative practice with witches is the line that keeps the order shut. Bonds between brothers are honored.",
+      "skills": [
+        { "skill": "staff-work", "modifier": 12 },
+        { "skill": "melee", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "mana", "modifier": 30 }
+      ],
+      "quirk": "You think in the Brotherhood's voice, even alone. The cooperative practice is unthinkable to you, and you suspect it in every witch you meet.",
+      "startingItems": [
+        { "item": "Battlestaff", "quantity": 1 }
+      ],
+      "abilities": ["Standing Wall", "Wind-Slow", "Hardened Strike"],
+      "unlockedBy": [],
+      "excludedBy": ["Witch of the College", "Hedge-Witch", "Consort of the College"]
+    },
+    "Witch-Killer": {
+      "name": "Witch-Killer",
+      "description": "A Brotherhood specialist deployed for the quiet hunts the three kingdoms officially do not discuss. Travels in plain clothes, carries the staff broken-down in a long bundle. Trained additionally in tracking, suppression, and the herbal and social signatures of an active hedge-witch's practice. Does not arrest. Does not bring back for trial.",
+      "skills": [
+        { "skill": "staff-work", "modifier": 8 },
+        { "skill": "investigation", "modifier": 8 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "mana", "modifier": 20 }
+      ],
+      "quirk": "You walk through a strange village reading it for the witch you are sure is there.",
+      "startingItems": [
+        { "item": "Battlestaff", "quantity": 1 }
+      ],
+      "abilities": ["Standing Wall", "Witch-Killer Tracker"],
+      "unlockedBy": ["Brother of Telinor"],
+      "excludedBy": ["Witch of the College", "Hedge-Witch", "Consort of the College"]
+    },
+    "Hedge-Wizard": {
+      "name": "Hedge-Wizard",
+      "description": "A man with the spark who slipped through, was trained privately, or learned what he could from a retired brother gone unsanctioned. Independent, unsanctioned, watched. The Brotherhood absorbs him where it can; where it cannot, it pays attention. A staff he made or inherited rather than the formal one made for him at Telinor — usable, attuned by years of his own work.",
+      "skills": [
+        { "skill": "staff-work", "modifier": 8 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "mana", "modifier": 20 }
+      ],
+      "quirk": "You watch the road behind you. The Brotherhood watches you back.",
+      "startingItems": [
+        { "item": "Battlestaff", "quantity": 1 }
+      ],
+      "abilities": ["Standing Wall"],
+      "unlockedBy": [],
+      "excludedBy": ["Brother of Telinor"]
+    },
+    "Witch of the College": {
+      "name": "Witch of the College",
+      "description": "A trained witch of the Queen's College in Avenor — the open practice the rest of human Hedoria criminalizes. The College trains mostly human women, with a smaller cohort of Draklid, Cephalen, Raknid, and the rare freed Quell. The reservoir is full or close to it; the consort-line system keeps it that way at home, and a careful witch carries potions and contacts on the road. Outside Avenor she conceals the practice. The Brotherhood is her standing professional opposition.",
+      "skills": [
+        { "skill": "witchcraft", "modifier": 12 },
+        { "skill": "investigation", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "reservoir", "modifier": 60 }
+      ],
+      "quirk": "You think in mana — what each working will cost, when you can fill, who in the room is the spark and who is not.",
+      "startingItems": [],
+      "abilities": ["Hedge-Working", "Witchlight", "Conjure Cold", "Cooperative Filling"],
+      "unlockedBy": [],
+      "excludedBy": ["Brother of Telinor", "Witch-Killer", "Consort of the College"]
+    },
+    "Hedge-Witch": {
+      "name": "Hedge-Witch",
+      "description": "A village practitioner working in quiet violation of kingdom law (or openly in Avenor as a freelance outside the College). Helps with births, fevers, contraceptive draughts, locks, the small protective workings the local lord pretends not to notice. Modest reservoir filled where she can manage it — black-market potion, careful partner, rare beast-source. Lives in constant low-grade danger and has rehearsed the fire she will set in the cottage if the witch-killers come.",
+      "skills": [
+        { "skill": "witchcraft", "modifier": 8 },
+        { "skill": "craft", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "reservoir", "modifier": 30 }
+      ],
+      "quirk": "You read every visitor for what they are, especially the polite ones.",
+      "startingItems": [],
+      "abilities": ["Hedge-Working", "Apothecary's Touch"],
+      "unlockedBy": [],
+      "excludedBy": ["Brother of Telinor", "Witch-Killer", "Consort of the College"]
+    },
+    "Consort of the College": {
+      "name": "Consort of the College",
+      "description": "A male wizard of Avenor, contracted under the Queen's College donor-line system as a partner to one or more witches. The original cooperative tradition the Brotherhood broke from. Honored, lawful in Avenor, doctrinally unthinkable in the three kingdoms. A consort generates mana like any wizard and donates it to his contracted witches; senior consorts work cooperatively in the field, multiplying the witch's range past anything the Brotherhood can match alone.",
+      "skills": [
+        { "skill": "staff-work", "modifier": 8 },
+        { "skill": "persuasion", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "mana", "modifier": 30 }
+      ],
+      "quirk": "You think of mana as something to give. The Brotherhood has a different word for what you are.",
+      "startingItems": [
+        { "item": "Battlestaff", "quantity": 1 }
+      ],
+      "abilities": ["Standing Wall", "Cooperative Filling"],
+      "unlockedBy": [],
+      "excludedBy": ["Brother of Telinor", "Witch-Killer", "Witch of the College", "Hedge-Witch"]
+    },
+    "Mana-Hunter": {
+      "name": "Mana-Hunter",
+      "description": "A black-market specialist working the high end of the witches' fill problem outside Avenor. Tracks magical creatures into their ranges, captures or kills them for extraction, refines their essence into potion. Unicorn buyers and worse. Politically tolerated by the kingdoms that need the goods quietly and pursued by Avenor where the trade enters its borders.",
+      "skills": [
+        { "skill": "survival", "modifier": 8 },
+        { "skill": "ranged", "modifier": 5 },
+        { "skill": "craft", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 10 }
+      ],
+      "quirk": "You see a creature first by the size of its essence.",
+      "startingItems": [],
+      "abilities": ["Mana-Hunter Track", "Brew Mana Potion"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Prime Ancestor-Mage": {
+      "name": "Prime Ancestor-Mage",
+      "description": "A monastery-trained Prime working through the bone-line of named ancestors. White fur, lion-muzzled face, deep blue robes heavy with embroidery and ancestor-tokens. Carries three or four portable relics on the road — far less than vault-access at home, but the bones know their work. Excellent at knowledge, healing, divination, true-naming, untangling curses. Useless in a battle of rates.",
+      "skills": [
+        { "skill": "ancestor-work", "modifier": 12 },
+        { "skill": "performance", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [],
+      "quirk": "You consult the relic before you commit to anything that matters.",
+      "startingItems": [
+        { "item": "Healer-line relic", "quantity": 1 },
+        { "item": "Bone-Reader relic", "quantity": 1 }
+      ],
+      "abilities": ["Ancestor-Call", "Mend by Lineage", "Bone-Reading"],
+      "unlockedBy": ["Primes"],
+      "excludedBy": []
+    },
+    "Prime Warden": {
+      "name": "Prime Warden",
+      "description": "A monastery-warrior of one of the seven great Prime monasteries — broad-shouldered and twelve feet of cold-country muscle, in heavy blue and crimson over layered fur, two-handed mace or polearm sized to the body. The monasteries do not project force outward. When the wardens come down from the mountains, something has gone seriously wrong.",
+      "skills": [
+        { "skill": "melee", "modifier": 12 },
+        { "skill": "intimidation", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 15 },
+        { "resource": "health", "modifier": 20 }
+      ],
+      "quirk": "You speak rarely. When you arrive in a village, the village notices.",
+      "startingItems": [],
+      "abilities": ["Veteran", "Standing Wall"],
+      "unlockedBy": ["Primes"],
+      "excludedBy": []
+    },
+    "Hold-Warrior": {
+      "name": "Hold-Warrior",
+      "description": "A trained close-combat fighter of one of the great clan or noble households — Draklid clan-hold, Threshi noble-band, Vorok house-security, Kelmari marches-house, Hofnar clan-guard, Cephalen House-marine, Fernwarg pack-hunter. The kit and culture vary by house, the underlying discipline does not. Seasoned for the kind of fight the household runs.",
+      "skills": [
+        { "skill": "melee", "modifier": 10 },
+        { "skill": "athletics", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 12 }
+      ],
+      "quirk": "You read a hall first for who you would have to kill, and the appraisal does not surface as an expression.",
+      "startingItems": [],
+      "abilities": ["Veteran"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Hunter": {
+      "name": "Hunter",
+      "description": "A trapper, game-hunter, or back-country tracker working the kingdoms' forests, the steppe edges, the Plateau scree. Reads trail, season, and weather. Carries the trade home — pelts, meat, the occasional troublesome predator brought down for bounty. The same hands serve well in scout work, marches-cycle skirmish, and the work of clearing grist warrens and tarkle infestations from settled country.",
+      "skills": [
+        { "skill": "ranged", "modifier": 8 },
+        { "skill": "survival", "modifier": 8 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 8 }
+      ],
+      "quirk": "You see tracks the rest of the party walks past.",
+      "startingItems": [],
+      "abilities": ["Marches-Reader"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Crafter": {
+      "name": "Crafter",
+      "description": "A skilled hand of one of the trades — smith, carpenter, weaver, mason, cooper, leatherworker, instrument-maker, brewer, dyer, baker. The whole human and non-human world of made things runs through these hands. A crafter knows the materials, the tools, the workshop register, and the quiet politics of guild and license that govern the work in any given town.",
+      "skills": [
+        { "skill": "craft", "modifier": 12 },
+        { "skill": "investigation", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [],
+      "quirk": "You assess any room first by what was made in it and how well.",
+      "startingItems": [],
+      "abilities": ["Smith's Eye"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Healer": {
+      "name": "Healer",
+      "description": "A practitioner of the body's ordinary repair — apothecary, midwife, bonesetter, herbalist, surgeon, household physician. Not a witch, though many village healers are quietly both. Knows wounds, fevers, births, draughts, and the particular medicine each race needs that a stranger to the race would get wrong.",
+      "skills": [
+        { "skill": "craft", "modifier": 10 },
+        { "skill": "investigation", "modifier": 5 },
+        { "skill": "persuasion", "modifier": 3 }
+      ],
+      "attributes": [],
+      "resources": [],
+      "quirk": "You triage a room without meaning to and remember faces by what they were dying of.",
+      "startingItems": [],
+      "abilities": ["Apothecary's Touch"],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Drifter": {
+      "name": "Drifter",
+      "description": "An unrooted person of the towns and roads — traveling musician, gambler, off-season laborer, sex-worker, pickpocket, beggar, courier of small cargoes. Lives at the edges of settled life. Knows which inns turn you away, which constables are corruptible, which back roads run between kingdoms unwatched.",
+      "skills": [
+        { "skill": "persuasion", "modifier": 8 },
+        { "skill": "acrobatics", "modifier": 5 }
+      ],
+      "attributes": [],
+      "resources": [
+        { "resource": "stamina", "modifier": 5 }
+      ],
+      "quirk": "You read a room first for who is paying attention to you and second for the exits.",
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+
+    "Forbidden Working": {
+      "name": "Forbidden Working",
+      "description": "The bearer has crossed into practice the Queen's College and the Brotherhood agree on banning. Essence-binding, coerced workings, beast-source extraction at the high end — magic that takes from a non-willing source. Power and access at the cost of standing, reputation, and (if discovered) life. The College reads the signature of forbidden work for years afterward.",
+      "skills": [],
+      "attributes": [],
+      "resources": [
+        { "resource": "reservoir", "modifier": 30 }
+      ],
+      "quirk": "You have decided that the price is worth paying. You have not told anyone you trust.",
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    }
+  },
+
+  "traitCategories": {
+    "Profession": {
+      "name": "Profession",
+      "maxSelections": 1,
+      "traits": [
+        "Soldier",
+        "Mercenary",
+        "Brother of Telinor",
+        "Witch-Killer",
+        "Hedge-Wizard",
+        "Witch of the College",
+        "Hedge-Witch",
+        "Consort of the College",
+        "Mana-Hunter",
+        "Prime Ancestor-Mage",
+        "Prime Warden",
+        "Hold-Warrior",
+        "Hunter",
+        "Crafter",
+        "Healer",
+        "Drifter"
+      ]
+    },
+    "Talent": {
+      "name": "Talent",
+      "maxSelections": 1,
+      "traits": [
+        "Forbidden Working"
+      ]
+    }
+  }
+}
