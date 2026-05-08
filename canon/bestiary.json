@@ -82,13 +82,13 @@
       "text": "Lumefox: Red-fox-sized, coat shifting between russet and silver depending on the angle of light, brush-tail tipped white. Solitary in meadows, hedgerows, and ruin-margins across the continent. Common enough to grind, valuable enough to bother—the bulk of the licensed Avenorian witch-trade is lumefox. Trapping is a profession in three kingdoms. A lumefox is intelligent in the quiet watching way of magical beasts and learns the lay of a trap-line within a season. The honest trappers replace their lines twice a year. The dishonest ones lose their hands."
     },
     "Lampfowl": {
-      "text": "Lampfowl: Pheasant-sized ground bird of the Reach edges and the Whitestone uplands. Tail feathers glow soft yellow at dusk, brightest in the hour after sundown. Flightless, runs and fights when cornered—the spurred legs are heavy and the beak is hooked. A lampfowl roost is a faint glow under the brush at twilight. Hedge-witches use the tail feathers for minor scrolls and the eggs for filling work that does not need much."
+      "text": "Lampfowl: Pheasant-sized ground bird of the Reach edges and the Whitestone uplands. Tail feathers glow soft yellow at dusk, brightest in the hour after sundown. Flightless, runs and fights when cornered—the spurred legs are heavy and the beak is hooked. A lampfowl roost is a faint glow under the brush at twilight. The tail feathers and eggs are valued reagents in alchemy: feathers for minor scrolls and light-charms, eggs as a base for hedge-tier potions and lesser working-charms. The material does not fill a witch on its own — only essence does — but lampfowl reagents take a working better than ordinary material and stretch a thin alchemy further."
     },
     "Sylvan": {
       "text": "Sylvan: Male humanoid magical creature, full-grown the size of a slight man, skin pearl or moss-green, found alone near old wells, deep pools, and sacred springs in the Reach and Avenor foothills. Beautiful in a still alien way, mute but watchful, fights with a small bone knife and minor water-magic. Mana-rich in the way a man is mana-rich, and far more so. Captured alive sells for many times the kill-price; the witch-academies want them for filling work, and a sylvan in good condition can fill a senior witch in a single session—the highest-quality donor source short of a Glasshorn. Officially forbidden in most kingdoms. Licensed in most kingdoms. The trade is ugly and most know it."
     },
     "Naia": {
-      "text": "Naia: Female counterpart to the sylvan, found in the same waters and groves. Beautiful, mute, fights with a bone knife and minor water-magic. Cannot fill a witch—the magical asymmetry that runs through human magic runs through magical creatures too—but a witch with a stocked larder of naia parts can extend a single filling much further than otherwise. The kill-trade hunts them; the living-trade does not bother. The naia's only protection from the kill-trade is that the witch who needs naia parts is rarely the witch who has the men to find them."
+      "text": "Naia: Female counterpart to the sylvan, found in the same waters and groves. Beautiful, mute, fights with a bone knife and minor water-magic. Naia parts do not fill a witch — material never does — but they are a high-value alchemical reagent that potentiates almost any working brewed around them, and an apothecary with naia stock can produce mana potions of better grade and higher yield from the same essence-source. The kill-trade hunts them for parts; the living-trade does not bother. The naia's only protection from the kill-trade is that the witch who needs naia parts is rarely the witch who has the men to find them."
     },
     "Stagling": {
       "text": "Stagling: Fawn-sized horned creature of the Reach meadow-corridors. Antlers carry a visible mana-glow at first light, brightest in the hour before sunrise. Runs but does not flee far. A common starter quarry for mana-hunters in their first season. Antlers grow back annually if the creature is spared, and the higher-grade trade is a managed harvest—Avenorian licensed houses keep stagling-meadows in the Reach foothills and pay foresters to keep the herds."
@@ -116,260 +116,465 @@
     "auroch": {
       "name": "auroch",
       "description": "[Tier 1] [Common] Massive bovine with bull-shoulders and a horn-spread the width of a wagon. Charges with crushing weight when threatened.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["bludgeoning"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "bludgeoning"
+      ],
       "immunities": []
     },
     "tuskboar": {
       "name": "tuskboar",
       "description": "[Tier 1] [Common] Foul-tempered, plague-carrying boar with curved tusks. Charges on sight.",
-      "vulnerabilities": ["piercing"],
+      "vulnerabilities": [
+        "piercing"
+      ],
       "resistances": [],
-      "immunities": ["poisoning"]
+      "immunities": [
+        "poisoning"
+      ]
     },
     "crag-cat": {
       "name": "crag-cat",
       "description": "[Tier 1] [Common] Pale-furred lynx with ear-tufts. Stalks from above and commits in a single leap.",
-      "vulnerabilities": ["piercing"],
+      "vulnerabilities": [
+        "piercing"
+      ],
       "resistances": [],
       "immunities": []
     },
     "rhok": {
       "name": "rhok",
       "description": "[Tier 1] [Common] Tall flightless bird with a single splitting claw on each foot. Runs down prey, kicks to disembowel.",
-      "vulnerabilities": ["piercing"],
+      "vulnerabilities": [
+        "piercing"
+      ],
       "resistances": [],
       "immunities": []
     },
     "wisent": {
       "name": "wisent",
       "description": "[Tier 1] [Common] Heavy-shouldered forest bison. Charges if approached past its tolerance.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["bludgeoning"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "bludgeoning"
+      ],
       "immunities": []
     },
     "throatworm": {
       "name": "throatworm",
       "description": "[Tier 2] [Common] Knee-thick segmented burrower with hooked feeding-mouths. Erupts from below and fights through.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["piercing", "slashing"],
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing"
+      ],
       "immunities": []
     },
     "husk": {
       "name": "husk",
       "description": "[Tier 2] [Common] Pale, bent, milky-eyed remnant of a drained human. Reduced to primal instincts—hunger, fear, the urge to return.",
-      "vulnerabilities": ["light", "fire"],
-      "resistances": ["dark"],
+      "vulnerabilities": [
+        "light",
+        "fire"
+      ],
+      "resistances": [
+        "dark"
+      ],
       "immunities": []
     },
     "gristlemaw": {
       "name": "gristlemaw",
       "description": "[Tier 2] [Common] Knee-high scaly grey lurker with an oversized hinged jaw. Bites and drags.",
-      "vulnerabilities": ["light"],
+      "vulnerabilities": [
+        "light"
+      ],
       "resistances": [],
       "immunities": []
     },
     "pinker": {
       "name": "pinker",
       "description": "[Tier 2] [Uncommon] Hairless pale primate the size of a large dog. Climbs walls, pries, uses simple tools.",
-      "vulnerabilities": ["fire"],
+      "vulnerabilities": [
+        "fire"
+      ],
       "resistances": [],
       "immunities": []
     },
     "drakehound": {
       "name": "drakehound",
       "description": "[Tier 3] [Common] Waist-high scaled war-dog. Mute pack-hunter, three to five, no baying.",
-      "vulnerabilities": ["fire"],
-      "resistances": ["piercing", "dark"],
+      "vulnerabilities": [
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "dark"
+      ],
       "immunities": []
     },
     "cliff-wyrm": {
       "name": "cliff-wyrm",
       "description": "[Tier 3] [Uncommon] Limbless serpent the length of three wagons. Constricts and swallows whole.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["slashing"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "slashing"
+      ],
       "immunities": []
     },
     "mawpig": {
       "name": "mawpig",
       "description": "[Tier 3] [Common] Calf-sized tusked carrion-beast. Mouth that splits the skull horizontally. Charges on sight.",
-      "vulnerabilities": ["light"],
-      "resistances": ["dark"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "light"
+      ],
+      "resistances": [
+        "dark"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "striglaw": {
       "name": "striglaw",
       "description": "[Tier 3] [Uncommon] Tall thin biped with two pairs of arms—upper gripping, lower barbed. Picks fights with anything it crosses.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["slashing"],
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "slashing"
+      ],
       "immunities": []
     },
     "ulk": {
       "name": "ulk",
       "description": "[Tier 3] [Uncommon] Semi-firm amber slime, dog-sized to bull-sized. Cuts under a blade. Engulfs prey to implant seed-pearls.",
-      "vulnerabilities": ["fire"],
-      "resistances": ["piercing", "slashing", "bludgeoning", "water"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "bludgeoning",
+        "water"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "slogger": {
       "name": "slogger",
       "description": "[Tier 3] [Uncommon] Calf-sized aggressive slug with acid mucus. Blunt charge breaks bone.",
-      "vulnerabilities": ["fire"],
-      "resistances": ["piercing", "slashing", "water"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "water"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "brood": {
       "name": "brood",
       "description": "[Tier 3] [Uncommon] Cart-sized spider-thing with heavy abdomen. Paralytic bite, ovipositor implants regardless of host's gender. Vulnerable from below.",
-      "vulnerabilities": ["fire"],
-      "resistances": ["piercing", "slashing", "dark"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "dark"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "hookwight": {
       "name": "hookwight",
       "description": "[Tier 3] [Common] Pallid serpent the length of two men, hinged jaw. Strikes from cover, slackness-venom, fights through.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["piercing"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "piercing"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "beetlebull": {
       "name": "beetlebull",
       "description": "[Tier 3] [Common] Ox-sized horned beetle. Charges with a single great horn, plated back, slow to turn.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["piercing", "slashing"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "mauler": {
       "name": "mauler",
       "description": "[Tier 4] [Uncommon] Twelve-foot ogre, slab-shouldered, club-armed. Lone road-keeper. Sets simple ambushes, takes captives.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["bludgeoning"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "bludgeoning"
+      ],
       "immunities": []
     },
     "bridge-troll": {
       "name": "bridge-troll",
       "description": "[Tier 4] [Uncommon] Squat broad troll under bridges and culverts. Speaks basic common-tongue, demands toll. Regenerates except from fire.",
-      "vulnerabilities": ["fire"],
-      "resistances": ["piercing", "slashing", "bludgeoning"],
+      "vulnerabilities": [
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "bludgeoning"
+      ],
       "immunities": []
     },
     "skarn": {
       "name": "skarn",
       "description": "[Tier 4] [Rare] Two-headed stone-skinned troll of high country. Slow on flat ground, terrifying on broken ground.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["piercing", "slashing", "fire"],
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "fire"
+      ],
       "immunities": []
     },
     "skellach": {
       "name": "skellach",
       "description": "[Tier 5] [Uncommon] Oxen-legged horned humanoid, tall as a man. Speaks fluently. Wields heavy wood stave two-handed. Binds captives with woven vine in an orchard-camp.",
-      "vulnerabilities": ["light"],
-      "resistances": ["dark", "piercing"],
+      "vulnerabilities": [
+        "light"
+      ],
+      "resistances": [
+        "dark",
+        "piercing"
+      ],
       "immunities": []
     },
     "imp": {
       "name": "imp",
       "description": "[Tier 5] [Uncommon] Knee-high demonic remnant. Red or ash-grey skin, vestigial wings, prehensile tail. Small fire-magic. Negotiates first.",
-      "vulnerabilities": ["light", "water"],
-      "resistances": ["fire", "dark"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "light",
+        "water"
+      ],
+      "resistances": [
+        "fire",
+        "dark"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "succor": {
       "name": "succor",
       "description": "[Tier 5] [Rare] Female-form demonic remnant. Beautiful in a wrong way. Charms by voice and touch, drains charmed over a single night to a Husk. Claws when forced.",
-      "vulnerabilities": ["light"],
-      "resistances": ["dark", "arcane"],
-      "immunities": ["psychic"]
+      "vulnerabilities": [
+        "light"
+      ],
+      "resistances": [
+        "dark",
+        "arcane"
+      ],
+      "immunities": [
+        "psychic"
+      ]
     },
     "goret": {
       "name": "goret",
       "description": "[Tier 5] [Uncommon] Waist-high demonic remnant, thickset, broken horns, drools coal-smoke. Crude iron weapon, used well. Haggles before fighting.",
-      "vulnerabilities": ["light", "water"],
-      "resistances": ["fire", "dark", "slashing"],
+      "vulnerabilities": [
+        "light",
+        "water"
+      ],
+      "resistances": [
+        "fire",
+        "dark",
+        "slashing"
+      ],
       "immunities": []
     },
     "glimmercat": {
       "name": "glimmercat",
       "description": "[Tier 6] [Common] House-cat-sized magical beast with opalescent fur and inner-lit eyes. Skittish but curious. Minor mana-bearing.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["arcane"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "arcane"
+      ],
       "immunities": []
     },
     "lumefox": {
       "name": "lumefox",
       "description": "[Tier 6] [Common] Fox with russet-and-silver shifting coat. Solitary, mana-bearing, the staple of the Avenorian witch-trade.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["arcane"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "arcane"
+      ],
       "immunities": []
     },
     "lampfowl": {
       "name": "lampfowl",
       "description": "[Tier 6] [Common] Pheasant-sized flightless ground bird. Tail feathers glow soft yellow at dusk. Runs and fights with spurred legs and hooked beak.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["arcane"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "arcane"
+      ],
       "immunities": []
     },
     "sylvan": {
       "name": "sylvan",
       "description": "[Tier 6] [Rare] Male humanoid magical creature, slight-man-sized, pearl or moss-green skin. Mute. Bone knife, minor water-magic. Highly mana-rich.",
-      "vulnerabilities": ["piercing", "fire"],
-      "resistances": ["water", "arcane"],
+      "vulnerabilities": [
+        "piercing",
+        "fire"
+      ],
+      "resistances": [
+        "water",
+        "arcane"
+      ],
       "immunities": []
     },
     "naia": {
       "name": "naia",
       "description": "[Tier 6] [Rare] Female humanoid magical creature, slight-woman-sized, pearl or moss-green skin. Mute. Bone knife, minor water-magic. Reagent-source, not filling-source.",
-      "vulnerabilities": ["piercing", "fire"],
-      "resistances": ["water", "arcane"],
+      "vulnerabilities": [
+        "piercing",
+        "fire"
+      ],
+      "resistances": [
+        "water",
+        "arcane"
+      ],
       "immunities": []
     },
     "stagling": {
       "name": "stagling",
       "description": "[Tier 6] [Common] Fawn-sized horned magical beast. Antlers carry visible mana-glow at first light. Runs but does not flee far.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["arcane"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "arcane"
+      ],
       "immunities": []
     },
     "pyrelynx": {
       "name": "pyrelynx",
       "description": "[Tier 6] [Uncommon] Wolf-sized cat with banked-coal coat, warm to the touch. Solitary. Ambushes once, fights through.",
-      "vulnerabilities": ["water"],
-      "resistances": ["fire", "arcane"],
+      "vulnerabilities": [
+        "water"
+      ],
+      "resistances": [
+        "fire",
+        "arcane"
+      ],
       "immunities": []
     },
     "maulerbear": {
       "name": "maulerbear",
       "description": "[Tier 7] [Rare] Wartide-bred bear, twice the size of a true bear. Bony jaw-ridges. Speaks slow common-tongue, mostly to taunt.",
-      "vulnerabilities": ["light", "fire"],
-      "resistances": ["piercing", "slashing", "dark"],
-      "immunities": ["poisoning"]
+      "vulnerabilities": [
+        "light",
+        "fire"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "dark"
+      ],
+      "immunities": [
+        "poisoning"
+      ]
     },
     "bloodthane": {
       "name": "bloodthane",
       "description": "[Tier 7] [Rare] Wartide-officer remnant, tall and chitin-plated. Drains humans to Husks by long touch. Speaks any tongue heard, holds court, commands lesser Wartide kin.",
-      "vulnerabilities": ["light"],
-      "resistances": ["dark", "arcane", "slashing"],
-      "immunities": ["poisoning", "psychic"]
+      "vulnerabilities": [
+        "light"
+      ],
+      "resistances": [
+        "dark",
+        "arcane",
+        "slashing"
+      ],
+      "immunities": [
+        "poisoning",
+        "psychic"
+      ]
     },
     "kelker": {
       "name": "kelker",
       "description": "[Tier 7] [Very Rare] Twelve-foot stilt-legged horror with a crown of arms around a feeding-orifice. Strides at impossible speed. Asks old questions.",
-      "vulnerabilities": ["bludgeoning"],
-      "resistances": ["piercing", "slashing", "dark"],
-      "immunities": ["poisoning", "psychic"]
+      "vulnerabilities": [
+        "bludgeoning"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "dark"
+      ],
+      "immunities": [
+        "poisoning",
+        "psychic"
+      ]
     },
     "loam-drinker": {
       "name": "loam-drinker",
       "description": "[Tier 7] [Very Rare] Vast burrowing worm. Surfaces in old pit-works. Speaks through the ground in low resonant common-tongue. Eats soil and what's in it.",
-      "vulnerabilities": ["light"],
-      "resistances": ["piercing", "slashing", "bludgeoning", "dark"],
-      "immunities": ["poisoning", "psychic"]
+      "vulnerabilities": [
+        "light"
+      ],
+      "resistances": [
+        "piercing",
+        "slashing",
+        "bludgeoning",
+        "dark"
+      ],
+      "immunities": [
+        "poisoning",
+        "psychic"
+      ]
     },
     "centaur-thane": {
       "name": "centaur-thane",
       "description": "[Tier 7] [Rare] Wartide-bred centauroid, bull-thick. Bands of three to five under a thane. Parleys when it pays. Heavy axe, staggering war-cry.",
-      "vulnerabilities": ["piercing"],
-      "resistances": ["bludgeoning", "dark"],
+      "vulnerabilities": [
+        "piercing"
+      ],
+      "resistances": [
+        "bludgeoning",
+        "dark"
+      ],
       "immunities": []
     }
   }
